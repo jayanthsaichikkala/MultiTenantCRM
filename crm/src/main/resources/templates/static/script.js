@@ -1,0 +1,1 @@
+document.writeln("Login page loaded");
