@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Login</title>
+</head>
+<body>
+    <h2>CRM Login</h2>
+
+    <div th:if="${param.error}" style="color: red;">Invalid credentials.</div>
+    <div th:if="${param.logout}" style="color: green;">Logged out successfully.</div>
+
+    <form th:action="@{/login}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <label for="usernameOrEmail">Username or Email:</label>
+        <input type="text" id="usernameOrEmail" name="usernameOrEmail" required>
+        <br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br><br>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
