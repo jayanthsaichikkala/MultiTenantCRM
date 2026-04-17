@@ -238,6 +238,23 @@ body {
 	transition: background 0.2s, transform 0.1s;
 }
 
+/* Eye icon (right side) */
+.toggle-password {
+	position: absolute;
+	right: 14px;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+}
+
+.toggle-password svg {
+	width: 18px;
+	height: 18px;
+	stroke: #bbc3d4;
+	fill: none;
+	stroke-width: 2;
+}
+
 .btn-primary:hover {
 	background: #17a07e;
 }
