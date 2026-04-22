@@ -3,15 +3,10 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-	<title>CRMS | Super Admin · Teal Depths Dashboard</title>
-	<!-- Font Awesome 6 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard | CRMS — Teal Depths</title> <!-- Styles -->
+	<link rel="stylesheet" th:href="@{/dashboard-super-admin.css}" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-	<!-- Main Stylesheet -->
-
-	<link rel="stylesheet" th:href="@{/dashboard-admin.css}" />
-	<!-- Main Script -->
-	<script src="dashboard-super-admin.js" defer></script>
 </head>
 
 <body>
@@ -54,8 +49,7 @@
 		<div class="topbar-right">
 			<button class="tb-btn" id="fullscreenBtn" title="Fullscreen"><i class="fas fa-expand"
 					id="fullscreenIcon"></i></button>
-			<button class="tb-btn" id="darkModeBtn" title="Dark mode"><i class="fas fa-moon"
-					id="darkModeIcon"></i></button>
+			<button class="tb-btn" id="darkModeBtn" title="Dark mode"><i class="fas fa-moon"></i></button>
 
 			<!-- Apps dropdown -->
 			<div class="apps-wrapper">
@@ -64,27 +58,33 @@
 					<div class="apps-grid">
 						<div class="app-item">
 							<div class="app-icon" style="background:linear-gradient(135deg,#0d9488,#0891b2)"><i
-									class="fas fa-chart-line"></i></div><span class="app-label">Analytics</span>
+									class="fas fa-chart-line"></i></div>
+							<span class="app-label">Analytics</span>
 						</div>
 						<div class="app-item">
 							<div class="app-icon" style="background:linear-gradient(135deg,#059669,#0d9488)"><i
-									class="fas fa-users"></i></div><span class="app-label">Contacts</span>
+									class="fas fa-users"></i></div>
+							<span class="app-label">Contacts</span>
 						</div>
 						<div class="app-item">
 							<div class="app-icon" style="background:linear-gradient(135deg,#0891b2,#06b6d4)"><i
-									class="fas fa-tasks"></i></div><span class="app-label">Tasks</span>
+									class="fas fa-tasks"></i></div>
+							<span class="app-label">Tasks</span>
 						</div>
 						<div class="app-item">
 							<div class="app-icon" style="background:linear-gradient(135deg,#0d9488,#059669)"><i
-									class="fas fa-envelope"></i></div><span class="app-label">Email</span>
+									class="fas fa-envelope"></i></div>
+							<span class="app-label">Email</span>
 						</div>
 						<div class="app-item">
 							<div class="app-icon" style="background:linear-gradient(135deg,#0369a1,#0891b2)"><i
-									class="fas fa-calendar"></i></div><span class="app-label">Calendar</span>
+									class="fas fa-calendar"></i></div>
+							<span class="app-label">Calendar</span>
 						</div>
 						<div class="app-item">
 							<div class="app-icon" style="background:linear-gradient(135deg,#14b8a6,#34d399)"><i
-									class="fas fa-file-alt"></i></div><span class="app-label">Reports</span>
+									class="fas fa-file-alt"></i></div>
+							<span class="app-label">Reports</span>
 						</div>
 					</div>
 				</div>
@@ -130,11 +130,14 @@
 
 			<!-- Notifications dropdown -->
 			<div class="notif-wrapper">
-				<button class="tb-btn" id="notifBtn" title="Notifications" style="position:relative"><i
-						class="fas fa-bell"></i><span class="tb-badge" id="notifBadge">3</span></button>
+				<button class="tb-btn" id="notifBtn" title="Notifications" style="position:relative">
+					<i class="fas fa-bell"></i>
+					<span class="tb-badge" id="notifBadge">3</span>
+				</button>
 				<div class="notif-dropdown" id="notifDropdown">
 					<div class="notif-header">
-						<h4>Notifications</h4><span class="notif-mark-all" id="markAllRead">Mark all read</span>
+						<h4>Notifications</h4>
+						<span class="notif-mark-all" id="markAllRead">Mark all read</span>
 					</div>
 					<div class="notif-item unread">
 						<div class="notif-icon ni-indigo"><i class="fas fa-handshake"></i></div>
@@ -169,7 +172,9 @@
 			<!-- User chip with dropdown -->
 			<div class="user-chip" id="userChip">
 				<div class="user-avatar"><span class="user-dot"></span></div>
-				<div class="user-info"><span class="user-name">Admin</span><span class="user-role">Super Admin</span>
+				<div class="user-info">
+					<span class="user-name">Admin</span>
+					<span class="user-role">Super Admin</span>
 				</div>
 				<div class="user-dropdown" id="userDropdown">
 					<div class="user-drop-head">
@@ -197,7 +202,9 @@
 
 		<!-- ═══════════════════ SIDEBAR ═══════════════════ -->
 		<aside class="sidebar" id="sidebar">
+
 			<span class="nav-section">Main Menu</span>
+
 			<div class="nav-group">
 				<div class="nav-item has-sub open active">
 					<div class="nav-row" onclick="toggleSub(this)" data-tooltip="Dashboard">
@@ -216,6 +223,7 @@
 						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Growth Dashboard</li>
 					</ul>
 				</div>
+
 				<div class="nav-item has-sub">
 					<div class="nav-row" onclick="toggleSub(this)" data-tooltip="Applications">
 						<span class="nav-icon"><i class="fas fa-border-all"></i></span>
@@ -229,6 +237,7 @@
 						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Kanban</li>
 					</ul>
 				</div>
+
 				<div class="nav-item has-sub">
 					<div class="nav-row" onclick="toggleSub(this)" data-tooltip="Super Admin">
 						<span class="nav-icon"><i class="fas fa-user-shield"></i></span>
@@ -242,6 +251,7 @@
 						<li onclick="setSubActive(this)"><span class="sub-dot"></span>System Settings</li>
 					</ul>
 				</div>
+
 				<div class="nav-item has-sub">
 					<div class="nav-row" onclick="toggleSub(this)" data-tooltip="Layouts">
 						<span class="nav-icon"><i class="fas fa-layer-group"></i></span>
@@ -255,50 +265,69 @@
 					</ul>
 				</div>
 			</div>
+
 			<span class="nav-section">CRM</span>
 			<div class="nav-group">
 				<div class="nav-item">
-					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Contacts"><span class="nav-icon"><i
-								class="fas fa-address-book"></i></span><span class="nav-label">Contacts</span></div>
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Contacts">
+						<span class="nav-icon"><i class="fas fa-address-book"></i></span>
+						<span class="nav-label">Contacts</span>
+					</div>
 				</div>
 				<div class="nav-item">
-					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Employees"><span class="nav-icon"><i
-								class="fas fa-users"></i></span><span class="nav-label">Employees</span></div>
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Employees">
+						<span class="nav-icon"><i class="fas fa-users"></i></span>
+						<span class="nav-label">Employees</span>
+					</div>
 				</div>
 				<div class="nav-item">
-					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Attendance"><span
-							class="nav-icon"><i class="fas fa-calendar-check"></i></span><span
-							class="nav-label">Attendance</span></div>
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Attendance">
+						<span class="nav-icon"><i class="fas fa-calendar-check"></i></span>
+						<span class="nav-label">Attendance</span>
+					</div>
 				</div>
 				<div class="nav-item">
-					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Tasks"><span class="nav-icon"><i
-								class="fas fa-list-check"></i></span><span class="nav-label">Tasks</span></div>
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Tasks">
+						<span class="nav-icon"><i class="fas fa-list-check"></i></span>
+						<span class="nav-label">Tasks</span>
+					</div>
 				</div>
 				<div class="nav-item">
-					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Teams"><span class="nav-icon"><i
-								class="fas fa-people-group"></i></span><span class="nav-label">Teams</span></div>
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Teams">
+						<span class="nav-icon"><i class="fas fa-people-group"></i></span>
+						<span class="nav-label">Teams</span>
+					</div>
 				</div>
 				<div class="nav-item">
-					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Meetings"><span class="nav-icon"><i
-								class="fas fa-video"></i></span><span class="nav-label">Meetings</span></div>
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Meetings">
+						<span class="nav-icon"><i class="fas fa-video"></i></span>
+						<span class="nav-label">Meetings</span>
+					</div>
 				</div>
 				<div class="nav-item">
-					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Calendar"><span class="nav-icon"><i
-								class="fas fa-calendar-days"></i></span><span class="nav-label">Calendar</span></div>
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Calendar">
+						<span class="nav-icon"><i class="fas fa-calendar-days"></i></span>
+						<span class="nav-label">Calendar</span>
+					</div>
 				</div>
 				<div class="nav-item">
-					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Leave"><span class="nav-icon"><i
-								class="fas fa-umbrella-beach"></i></span><span class="nav-label">Leave</span></div>
-				</div>
-			</div>
-			<span class="nav-section">System</span>
-			<div class="nav-group">
-				<div class="nav-item">
-					<div class="nav-row" onclick="setNavActive(this); openSettingsModal()" data-tooltip="Settings"><span
-							class="nav-icon"><i class="fas fa-gear"></i></span><span class="nav-label">Settings</span>
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Leave">
+						<span class="nav-icon"><i class="fas fa-umbrella-beach"></i></span>
+						<span class="nav-label">Leave</span>
 					</div>
 				</div>
 			</div>
+
+			<span class="nav-section">System</span>
+			<div class="nav-group">
+				<div class="nav-item">
+					<div class="nav-row" onclick="setNavActive(this); openSettingsModal()" data-tooltip="Settings">
+						<span class="nav-icon"><i class="fas fa-gear"></i></span>
+						<span class="nav-label">Settings</span>
+					</div>
+				</div>
+			</div>
+
 			<div class="sidebar-footer">
 				<div class="sidebar-footer-meta">
 					<div class="sf-av"></div>
@@ -307,13 +336,18 @@
 						<div class="sf-role">Super Administrator</div>
 					</div>
 				</div>
-				<button class="logout-btn" onclick="confirmLogout()"><i
-						class="fas fa-arrow-right-from-bracket"></i><span class="logout-text">Logout</span></button>
+				<button class="logout-btn" onclick="confirmLogout()">
+					<i class="fas fa-arrow-right-from-bracket"></i>
+					<span class="logout-text">Logout</span>
+				</button>
 			</div>
+
 		</aside>
 
 		<!-- ═══════════════════ MAIN ═══════════════════ -->
 		<main class="main">
+
+			<!-- Page Header -->
 			<div class="page-header">
 				<div class="ph-left">
 					<div class="page-eyebrow">Super Admin</div>
@@ -330,9 +364,11 @@
 						<div class="av-plus" title="Add member" onclick="openAddMemberModal()"><i
 								class="fas fa-plus"></i></div>
 					</div>
-					<button class="date-btn" onclick="openDateModal()"><i class="far fa-calendar"></i><span
-							id="dateRange">19 Mar 26 – 17 Apr 26</span><i class="fas fa-chevron-down"
-							style="font-size:.6rem;opacity:.6"></i></button>
+					<button class="date-btn" onclick="openDateModal()">
+						<i class="far fa-calendar"></i>
+						<span id="dateRange">19 Mar 26 – 17 Apr 26</span>
+						<i class="fas fa-chevron-down" style="font-size:.6rem;opacity:.6"></i>
+					</button>
 					<button class="icon-btn" title="Download Report" onclick="downloadReport()"><i
 							class="fas fa-arrow-down-to-line"></i></button>
 					<button class="icon-btn" title="Refresh" onclick="refreshDashboard()"><i
@@ -342,29 +378,30 @@
 				</div>
 			</div>
 
-			<!-- KPI CARDS -->
+			<!-- ── KPI CARDS ── -->
 			<section class="kpi-grid">
 				<div class="kpi-card" onclick="showToast('Revenue details loaded','info')">
 					<div class="kpi-body">
 						<p class="kpi-label">Total Revenue</p>
-						<h2 class="kpi-value">$15,44,540</h2><span class="kpi-change kpi-up"><i
-								class="fas fa-arrow-trend-up"></i>+2.5% vs Last Week</span>
+						<h2 class="kpi-value">$15,44,540</h2>
+						<span class="kpi-change kpi-up"><i class="fas fa-arrow-trend-up"></i>+2.5% vs Last Week</span>
 					</div>
 					<div class="kpi-icon kpi-icon-1"><i class="fas fa-dollar-sign"></i></div>
 				</div>
 				<div class="kpi-card" onclick="showToast('Deals data refreshed','info')">
 					<div class="kpi-body">
 						<p class="kpi-label">Active Deals</p>
-						<h2 class="kpi-value">147</h2><span class="kpi-change kpi-down"><i
-								class="fas fa-arrow-trend-down"></i>-21.15% vs Last Week</span>
+						<h2 class="kpi-value">147</h2>
+						<span class="kpi-change kpi-down"><i class="fas fa-arrow-trend-down"></i>-21.15% vs Last
+							Week</span>
 					</div>
 					<div class="kpi-icon kpi-icon-2"><i class="fas fa-handshake"></i></div>
 				</div>
 				<div class="kpi-card" onclick="showToast('Conversion analytics loaded','info')">
 					<div class="kpi-body">
 						<p class="kpi-label">Conversion Rate</p>
-						<h2 class="kpi-value">32.8%</h2><span class="kpi-change kpi-up"><i
-								class="fas fa-arrow-trend-up"></i>+15.5% vs Last Week</span>
+						<h2 class="kpi-value">32.8%</h2>
+						<span class="kpi-change kpi-up"><i class="fas fa-arrow-trend-up"></i>+15.5% vs Last Week</span>
 					</div>
 					<div class="kpi-icon kpi-icon-3"><i class="fas fa-chart-line"></i></div>
 				</div>
@@ -372,12 +409,13 @@
 					<div class="kpi-body">
 						<p class="kpi-label">Total Contacts</p>
 						<h2 class="kpi-value">4,569 <small
-								style="font-size:.65rem;color:#0a6b60;background:rgba(13,148,136,.12);padding:2px 6px;border-radius:20px;">+2.5%</small>
+								style="font-size:.65rem;color:#0a6b60;background:rgba(13,148,136,.12);padding:2px 6px;border-radius:20px;font-family:var(--font);">+2.5%</small>
 						</h2>
 						<div class="kpi-av-row">
 							<div class="av-item av-a"></div>
 							<div class="av-item av-b"></div>
-							<div class="av-item av-c"></div><span class="kpi-av-more">+4 From Last Week</span>
+							<div class="av-item av-c"></div>
+							<span class="kpi-av-more">+4 From Last Week</span>
 						</div>
 					</div>
 					<div class="sparkline" id="sparkline">
@@ -392,25 +430,30 @@
 				</div>
 			</section>
 
-			<!-- CHARTS ROW -->
+			<!-- ── CHARTS ROW ── -->
 			<section class="charts-row">
 				<div class="card card--revenue">
 					<div class="card-head">
 						<h3 class="card-title"><span class="title-accent"></span>Revenue Analytics</h3>
-						<div class="tabs" id="revTabs"><button class="tab-btn active"
-								onclick="switchTab(this,'weekly')">Weekly</button><button class="tab-btn"
-								onclick="switchTab(this,'monthly')">Monthly</button><button class="tab-btn"
-								onclick="switchTab(this,'yearly')">Yearly</button></div>
+						<div class="tabs" id="revTabs">
+							<button class="tab-btn active" onclick="switchTab(this,'weekly')">Weekly</button>
+							<button class="tab-btn" onclick="switchTab(this,'monthly')">Monthly</button>
+							<button class="tab-btn" onclick="switchTab(this,'yearly')">Yearly</button>
+						</div>
 					</div>
 					<div class="rev-meta">
-						<div><span class="rev-big-num" id="revBigNum">$495K</span><span class="rev-label">Revenue with
-								Sales (USD)</span></div>
+						<div>
+							<span class="rev-big-num" id="revBigNum">$495K</span>
+							<span class="rev-label">Revenue with Sales (USD)</span>
+						</div>
 						<div class="legend">
 							<div class="leg-item">
-								<div class="leg-dot" style="background:var(--teal)"></div><span>Revenue</span>
+								<div class="leg-dot" style="background:var(--teal)"></div>
+								<span style="color:var(--text-2);font-size:.72rem;font-weight:600;">Revenue</span>
 							</div>
 							<div class="leg-item">
-								<div class="leg-dot" style="background:rgba(13,148,136,.3)"></div><span>Sales</span>
+								<div class="leg-dot" style="background:rgba(13,148,136,.3)"></div>
+								<span style="color:var(--muted);font-size:.72rem;font-weight:600;">Sales</span>
 							</div>
 						</div>
 					</div>
@@ -422,13 +465,15 @@
 					</div>
 					<div class="x-axis" id="xAxisLabels"></div>
 				</div>
+
 				<div class="card card--traffic">
 					<div class="card-head">
-						<h3 class="card-title"><span class="title-accent"></span>Traffic Sources</h3><button
-							class="icon-btn-sm" onclick="showToast('Traffic report exported','success')"><i
+						<h3 class="card-title"><span class="title-accent"></span>Traffic Sources</h3>
+						<button class="icon-btn-sm" onclick="showToast('Traffic report exported','success')"><i
 								class="fas fa-arrow-right"></i></button>
 					</div>
-					<div class="donut-wrap"><svg viewBox="0 0 160 160" class="donut-svg">
+					<div class="donut-wrap">
+						<svg viewBox="0 0 160 160" class="donut-svg">
 							<circle class="donut-bg" cx="80" cy="80" r="60" />
 							<circle class="donut-seg seg-emerald" cx="80" cy="80" r="60" stroke-dashoffset="0"
 								transform="rotate(-90 80 80)" />
@@ -439,8 +484,10 @@
 							<circle class="donut-seg seg-violet" cx="80" cy="80" r="60" stroke-dashoffset="-350"
 								transform="rotate(-90 80 80)" />
 						</svg>
-						<div class="donut-center"><span class="donut-pct">58%</span><span
-								class="donut-sub">Organic</span></div>
+						<div class="donut-center">
+							<span class="donut-pct">58%</span>
+							<span class="donut-sub">Organic</span>
+						</div>
 					</div>
 					<ul class="traffic-list">
 						<li onclick="showToast('Organic: 6,598 visitors','info')"><span
@@ -455,12 +502,14 @@
 				</div>
 			</section>
 
-			<!-- MID ROW -->
+			<!-- ── MID ROW ── -->
 			<section class="mid-row">
+
+				<!-- Top Deals -->
 				<div class="card card--deals">
 					<div class="card-head">
-						<h3 class="card-title"><span class="title-accent"></span>Top Deals</h3><select class="select-sm"
-							onchange="showToast('Deals filter updated','success')">
+						<h3 class="card-title"><span class="title-accent"></span>Top Deals</h3>
+						<select class="select-sm" onchange="showToast('Deals filter updated','success')">
 							<option>Last 30 Days</option>
 							<option>Last 7 Days</option>
 							<option>Last Year</option>
@@ -471,7 +520,8 @@
 							<div class="deal-logo dl-1"><i class="fas fa-paper-plane"></i></div>
 							<div class="deal-info">
 								<div class="deal-name">NovaWave LLC</div>
-								<div class="deal-loc"><i class="fas fa-location-dot"></i>Germany</div>
+								<div class="deal-loc"><i class="fas fa-location-dot"
+										style="font-size:.65rem;margin-right:3px;opacity:.6"></i>Germany</div>
 							</div>
 							<div style="text-align:right">
 								<div class="deal-amount">$19,94,938</div><span class="deal-badge">+12%</span>
@@ -481,7 +531,8 @@
 							<div class="deal-logo dl-2"><i class="fas fa-recycle"></i></div>
 							<div class="deal-info">
 								<div class="deal-name">Silver Hawk</div>
-								<div class="deal-loc"><i class="fas fa-location-dot"></i>Australia</div>
+								<div class="deal-loc"><i class="fas fa-location-dot"
+										style="font-size:.65rem;margin-right:3px;opacity:.6"></i>Australia</div>
 							</div>
 							<div style="text-align:right">
 								<div class="deal-amount">$15,44,540</div><span class="deal-badge">+8%</span>
@@ -491,7 +542,8 @@
 							<div class="deal-logo dl-3"><i class="fas fa-fan"></i></div>
 							<div class="deal-info">
 								<div class="deal-name">Summit LLC</div>
-								<div class="deal-loc"><i class="fas fa-location-dot"></i>Italy</div>
+								<div class="deal-loc"><i class="fas fa-location-dot"
+										style="font-size:.65rem;margin-right:3px;opacity:.6"></i>Italy</div>
 							</div>
 							<div style="text-align:right">
 								<div class="deal-amount">$10,36,390</div><span class="deal-badge">+5%</span>
@@ -501,7 +553,8 @@
 							<div class="deal-logo dl-4"><i class="fas fa-sun"></i></div>
 							<div class="deal-info">
 								<div class="deal-name">Bluesky Industries</div>
-								<div class="deal-loc"><i class="fas fa-location-dot"></i>Canada</div>
+								<div class="deal-loc"><i class="fas fa-location-dot"
+										style="font-size:.65rem;margin-right:3px;opacity:.6"></i>Canada</div>
 							</div>
 							<div style="text-align:right">
 								<div class="deal-amount">$10,15,280</div><span class="deal-badge">+3%</span>
@@ -511,7 +564,8 @@
 							<div class="deal-logo dl-5"><i class="fas fa-heart-pulse"></i></div>
 							<div class="deal-info">
 								<div class="deal-name">HealthTech Innovations</div>
-								<div class="deal-loc"><i class="fas fa-location-dot"></i>UK</div>
+								<div class="deal-loc"><i class="fas fa-location-dot"
+										style="font-size:.65rem;margin-right:3px;opacity:.6"></i>UK</div>
 							</div>
 							<div style="text-align:right">
 								<div class="deal-amount">$10,14,112</div><span class="deal-badge">+2%</span>
@@ -522,10 +576,11 @@
 							class="fas fa-arrow-right"></i></div>
 				</div>
 
+				<!-- Pipeline -->
 				<div class="card card--pipeline">
 					<div class="card-head">
-						<h3 class="card-title"><span class="title-accent"></span>Pipeline</h3><select class="select-sm"
-							onchange="showToast('Pipeline view updated','success')">
+						<h3 class="card-title"><span class="title-accent"></span>Pipeline</h3>
+						<select class="select-sm" onchange="showToast('Pipeline view updated','success')">
 							<option>Weekly</option>
 							<option>Monthly</option>
 						</select>
@@ -556,18 +611,23 @@
 							<div class="pipe-bar pipe-emerald"></div>
 						</div>
 					</div>
-					<div class="profit-hdr"><span>Profit Earned</span><strong>$85K</strong><select class="select-sm"
-							style="margin-left:auto" onchange="showToast('Year updated','success')">
+					<div class="profit-hdr">
+						<span>Profit Earned</span>
+						<strong>$85K</strong>
+						<select class="select-sm" style="margin-left:auto"
+							onchange="showToast('Year updated','success')">
 							<option>2025</option>
 							<option>2026</option>
-						</select></div>
+						</select>
+					</div>
 					<div class="profit-bars" id="profitBars"></div>
 				</div>
 
+				<!-- Deals Overview -->
 				<div class="card card--overview">
 					<div class="card-head">
-						<h3 class="card-title"><span class="title-accent"></span>Deals Overview</h3><button
-							class="icon-btn-sm" onclick="showToast('Overview report exported','success')"><i
+						<h3 class="card-title"><span class="title-accent"></span>Deals Overview</h3>
+						<button class="icon-btn-sm" onclick="showToast('Overview report exported','success')"><i
 								class="fas fa-arrow-right"></i></button>
 					</div>
 					<div class="ov-bar">
@@ -576,8 +636,11 @@
 						<div class="ov-seg ov-violet" style="--w:18.8%"></div>
 						<div class="ov-seg ov-rose" style="--w:3.9%"></div>
 					</div>
-					<div class="ov-total"><span class="ov-num">2,656</span><span class="ov-badge">+12.5%</span><span
-							class="ov-sub">compared to last week</span></div>
+					<div class="ov-total">
+						<span class="ov-num">2,656</span>
+						<span class="ov-badge">+12.5%</span>
+						<span class="ov-sub">compared to last week</span>
+					</div>
 					<ul class="ov-list">
 						<li onclick="showToast('Successful deals: 1,000','success')"><span
 								class="ov-dot ov-d-emerald"></span>Successful Deals<strong>1,000 Deals</strong></li>
@@ -604,12 +667,12 @@
 				</div>
 			</section>
 
-			<!-- RECENT DEALS TABLE -->
+			<!-- ── RECENT DEALS TABLE ── -->
 			<div class="card card--table">
 				<div class="table-head">
-					<h3 class="card-title"><span class="title-accent"></span>Recent Deals</h3><a href="#"
-						class="view-all" onclick="showToast('Loading all deals...','info');return false;">View All <i
-							class="fas fa-arrow-right"></i></a>
+					<h3 class="card-title"><span class="title-accent"></span>Recent Deals</h3>
+					<a href="#" class="view-all" onclick="showToast('Loading all deals...','info');return false;">View
+						All <i class="fas fa-arrow-right"></i></a>
 				</div>
 				<div class="table-wrap">
 					<table class="data-table">
@@ -730,23 +793,33 @@
 				</div>
 			</div>
 
-			<footer class="dash-footer"><span>© 2026 <a href="#" style="color:var(--teal)">CRMS</a> — All rights
-					reserved</span>
-				<div class="footer-links"><a href="#">About</a><a href="#">Privacy</a><a href="#">Terms</a><a
-						href="#">Contact</a></div>
+			<footer class="dash-footer">
+				<span>© 2026 <a href="#" style="color:var(--teal)">CRMS</a> — All rights reserved</span>
+				<div class="footer-links">
+					<a href="#">About</a>
+					<a href="#">Privacy</a>
+					<a href="#">Terms</a>
+					<a href="#">Contact</a>
+				</div>
 			</footer>
+
 		</main>
 	</div>
 
+	<!-- FAB -->
 	<button class="fab" title="Settings" onclick="openSettingsModal()"><i class="fas fa-gear"></i></button>
+
+	<!-- Toast Container -->
 	<div class="toast-container" id="toastContainer"></div>
 
-	<!-- MODALS (deal, settings, profile, logout, add member, date) -->
+	<!-- ═══ MODALS ═══ -->
+
+	<!-- Deal Details Modal -->
 	<div class="modal-overlay hidden" id="dealModal">
 		<div class="modal">
 			<div class="modal-head">
-				<h3 id="dealModalTitle">Deal Details</h3><button class="modal-close"
-					onclick="closeModal('dealModal')"><i class="fas fa-times"></i></button>
+				<h3 id="dealModalTitle">Deal Details</h3>
+				<button class="modal-close" onclick="closeModal('dealModal')"><i class="fas fa-times"></i></button>
 			</div>
 			<div class="modal-body">
 				<div class="form-grid" style="margin-bottom:.85rem">
@@ -769,56 +842,77 @@
 						<div style="font-size:.85rem;font-weight:700;color:var(--text)" id="dealRegion">—</div>
 					</div>
 				</div>
-				<div class="form-row"><label class="form-label">Add Note</label><input type="text" class="form-input"
-						placeholder="Enter a note about this deal…"></div>
+				<div class="form-row">
+					<label class="form-label">Add Note</label>
+					<input type="text" class="form-input" placeholder="Enter a note about this deal…">
+				</div>
 			</div>
-			<div class="modal-footer"><button class="btn btn-ghost"
-					onclick="closeModal('dealModal')">Close</button><button class="btn btn-primary"
+			<div class="modal-footer">
+				<button class="btn btn-ghost" onclick="closeModal('dealModal')">Close</button>
+				<button class="btn btn-primary"
 					onclick="closeModal('dealModal');showToast('Note saved successfully','success')">Save Note</button>
 			</div>
 		</div>
 	</div>
+
+	<!-- Settings Modal -->
 	<div class="modal-overlay hidden" id="settingsModal">
 		<div class="modal">
 			<div class="modal-head">
-				<h3>Settings</h3><button class="modal-close" onclick="closeModal('settingsModal')"><i
-						class="fas fa-times"></i></button>
+				<h3>Settings</h3>
+				<button class="modal-close" onclick="closeModal('settingsModal')"><i class="fas fa-times"></i></button>
 			</div>
 			<div class="modal-body">
-				<div class="form-row"><label class="form-label">Display Name</label><input type="text"
-						class="form-input" value="Admin User"></div>
-				<div class="form-row"><label class="form-label">Email Address</label><input type="email"
-						class="form-input" value="admin@crms.io"></div>
-				<div class="form-row"><label class="form-label">Timezone</label><select class="form-input">
+				<div class="form-row">
+					<label class="form-label">Display Name</label>
+					<input type="text" class="form-input" value="Admin User">
+				</div>
+				<div class="form-row">
+					<label class="form-label">Email Address</label>
+					<input type="email" class="form-input" value="admin@crms.io">
+				</div>
+				<div class="form-row">
+					<label class="form-label">Timezone</label>
+					<select class="form-input">
 						<option>UTC +5:30 (IST)</option>
 						<option>UTC +0:00 (GMT)</option>
 						<option>UTC -5:00 (EST)</option>
 						<option>UTC +9:00 (JST)</option>
-					</select></div>
+					</select>
+				</div>
 				<div class="form-grid">
-					<div class="form-row"><label class="form-label">Language</label><select class="form-input">
+					<div class="form-row">
+						<label class="form-label">Language</label>
+						<select class="form-input">
 							<option>English</option>
 							<option>Hindi</option>
 							<option>Spanish</option>
-						</select></div>
-					<div class="form-row"><label class="form-label">Currency</label><select class="form-input">
+						</select>
+					</div>
+					<div class="form-row">
+						<label class="form-label">Currency</label>
+						<select class="form-input">
 							<option>USD ($)</option>
 							<option>INR (₹)</option>
 							<option>EUR (€)</option>
-						</select></div>
+						</select>
+					</div>
 				</div>
 			</div>
-			<div class="modal-footer"><button class="btn btn-ghost"
-					onclick="closeModal('settingsModal')">Cancel</button><button class="btn btn-primary"
+			<div class="modal-footer">
+				<button class="btn btn-ghost" onclick="closeModal('settingsModal')">Cancel</button>
+				<button class="btn btn-primary"
 					onclick="closeModal('settingsModal');showToast('Settings saved!','success')">Save Changes</button>
 			</div>
 		</div>
 	</div>
+
+	<!-- Profile Modal -->
 	<div class="modal-overlay hidden" id="profileModal">
 		<div class="modal">
 			<div class="modal-head">
-				<h3>My Profile</h3><button class="modal-close" onclick="closeModal('profileModal')"><i
-						class="fas fa-times"></i></button>
+				<h3>My Profile</h3>
+				<button class="modal-close" onclick="closeModal('profileModal')"><i class="fas fa-times"></i></button>
 			</div>
 			<div class="modal-body">
 				<div
@@ -832,89 +926,123 @@
 						<div style="font-size:.72rem;color:var(--teal);margin-top:2px">admin@crms.io</div>
 					</div>
 				</div>
-				<div class="form-row"><label class="form-label">Full Name</label><input type="text" class="form-input"
-						value="Admin User"></div>
-				<div class="form-row"><label class="form-label">Phone</label><input type="text" class="form-input"
-						placeholder="+91 00000 00000"></div>
-				<div class="form-row"><label class="form-label">New Password</label><input type="password"
-						class="form-input" placeholder="Leave blank to keep current"></div>
+				<div class="form-row">
+					<label class="form-label">Full Name</label>
+					<input type="text" class="form-input" value="Admin User">
+				</div>
+				<div class="form-row">
+					<label class="form-label">Phone</label>
+					<input type="text" class="form-input" placeholder="+91 00000 00000">
+				</div>
+				<div class="form-row">
+					<label class="form-label">New Password</label>
+					<input type="password" class="form-input" placeholder="Leave blank to keep current">
+				</div>
 			</div>
-			<div class="modal-footer"><button class="btn btn-ghost"
-					onclick="closeModal('profileModal')">Cancel</button><button class="btn btn-primary"
+			<div class="modal-footer">
+				<button class="btn btn-ghost" onclick="closeModal('profileModal')">Cancel</button>
+				<button class="btn btn-primary"
 					onclick="closeModal('profileModal');showToast('Profile updated!','success')">Update Profile</button>
 			</div>
 		</div>
 	</div>
+
+	<!-- Logout Confirm Modal -->
 	<div class="modal-overlay hidden" id="logoutModal">
 		<div class="modal" style="width:360px">
 			<div class="modal-head">
-				<h3>Confirm Logout</h3><button class="modal-close" onclick="closeModal('logoutModal')"><i
-						class="fas fa-times"></i></button>
+				<h3>Confirm Logout</h3>
+				<button class="modal-close" onclick="closeModal('logoutModal')"><i class="fas fa-times"></i></button>
 			</div>
 			<div class="modal-body">
 				<p style="font-size:.82rem;color:var(--text-2);line-height:1.6">Are you sure you want to logout? Your
 					session will be ended and you'll be redirected to the login page.</p>
 			</div>
-			<div class="modal-footer"><button class="btn btn-ghost"
-					onclick="closeModal('logoutModal')">Cancel</button><button class="btn btn-danger"
+			<div class="modal-footer">
+				<button class="btn btn-ghost" onclick="closeModal('logoutModal')">Cancel</button>
+				<button class="btn btn-danger"
 					onclick="closeModal('logoutModal');showToast('Logged out successfully','success')">Logout</button>
 			</div>
 		</div>
 	</div>
+
+	<!-- Add Member Modal -->
 	<div class="modal-overlay hidden" id="addMemberModal">
 		<div class="modal">
 			<div class="modal-head">
-				<h3>Add Team Member</h3><button class="modal-close" onclick="closeModal('addMemberModal')"><i
-						class="fas fa-times"></i></button>
+				<h3>Add Team Member</h3>
+				<button class="modal-close" onclick="closeModal('addMemberModal')"><i class="fas fa-times"></i></button>
 			</div>
 			<div class="modal-body">
-				<div class="form-row"><label class="form-label">Name</label><input type="text" class="form-input"
-						placeholder="Enter member's name"></div>
-				<div class="form-row"><label class="form-label">Email</label><input type="email" class="form-input"
-						placeholder="Enter email address"></div>
-				<div class="form-row"><label class="form-label">Role</label><select class="form-input">
+				<div class="form-row">
+					<label class="form-label">Name</label>
+					<input type="text" class="form-input" placeholder="Enter member's name">
+				</div>
+				<div class="form-row">
+					<label class="form-label">Email</label>
+					<input type="email" class="form-input" placeholder="Enter email address">
+				</div>
+				<div class="form-row">
+					<label class="form-label">Role</label>
+					<select class="form-input">
 						<option>Sales Executive</option>
 						<option>Team Lead</option>
 						<option>Manager</option>
 						<option>Admin</option>
-					</select></div>
+					</select>
+				</div>
 			</div>
-			<div class="modal-footer"><button class="btn btn-ghost"
-					onclick="closeModal('addMemberModal')">Cancel</button><button class="btn btn-primary"
+			<div class="modal-footer">
+				<button class="btn btn-ghost" onclick="closeModal('addMemberModal')">Cancel</button>
+				<button class="btn btn-primary"
 					onclick="closeModal('addMemberModal');showToast('Member invited successfully!','success')">Send
-					Invite</button></div>
+					Invite</button>
+			</div>
 		</div>
 	</div>
+
+	<!-- Date Range Modal -->
 	<div class="modal-overlay hidden" id="dateModal">
 		<div class="modal" style="width:380px">
 			<div class="modal-head">
-				<h3>Select Date Range</h3><button class="modal-close" onclick="closeModal('dateModal')"><i
-						class="fas fa-times"></i></button>
+				<h3>Select Date Range</h3>
+				<button class="modal-close" onclick="closeModal('dateModal')"><i class="fas fa-times"></i></button>
 			</div>
 			<div class="modal-body">
 				<div class="form-grid">
-					<div class="form-row"><label class="form-label">Start Date</label><input type="date"
-							class="form-input" value="2026-03-19"></div>
-					<div class="form-row"><label class="form-label">End Date</label><input type="date"
-							class="form-input" value="2026-04-17"></div>
+					<div class="form-row">
+						<label class="form-label">Start Date</label>
+						<input type="date" class="form-input" value="2026-03-19">
+					</div>
+					<div class="form-row">
+						<label class="form-label">End Date</label>
+						<input type="date" class="form-input" value="2026-04-17">
+					</div>
 				</div>
-				<div class="form-row"><label class="form-label">Quick Select</label>
-					<div style="display:flex;flex-wrap:wrap;gap:.42rem"><button class="btn btn-ghost"
-							style="padding:.35rem .75rem;font-size:.72rem" onclick="setDateRange('Last 7 Days')">Last 7
-							Days</button><button class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.72rem"
-							onclick="setDateRange('Last 30 Days')">Last 30 Days</button><button class="btn btn-ghost"
-							style="padding:.35rem .75rem;font-size:.72rem" onclick="setDateRange('This Month')">This
-							Month</button><button class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.72rem"
-							onclick="setDateRange('This Quarter')">This Quarter</button></div>
+				<div class="form-row">
+					<label class="form-label">Quick Select</label>
+					<div style="display:flex;flex-wrap:wrap;gap:.42rem">
+						<button class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.72rem"
+							onclick="setDateRange('Last 7 Days')">Last 7 Days</button>
+						<button class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.72rem"
+							onclick="setDateRange('Last 30 Days')">Last 30 Days</button>
+						<button class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.72rem"
+							onclick="setDateRange('This Month')">This Month</button>
+						<button class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.72rem"
+							onclick="setDateRange('This Quarter')">This Quarter</button>
+					</div>
 				</div>
 			</div>
-			<div class="modal-footer"><button class="btn btn-ghost"
-					onclick="closeModal('dateModal')">Cancel</button><button class="btn btn-primary"
-					onclick="closeModal('dateModal');showToast('Date range applied','success')">Apply</button></div>
+			<div class="modal-footer">
+				<button class="btn btn-ghost" onclick="closeModal('dateModal')">Cancel</button>
+				<button class="btn btn-primary"
+					onclick="closeModal('dateModal');showToast('Date range applied','success')">Apply</button>
+			</div>
 		</div>
 	</div>
 
-</body>
+</body>y
 
+<script th:src="@{/dashboard-super-admin.js}"></script>
 
 </html>

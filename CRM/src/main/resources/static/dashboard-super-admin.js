@@ -1,120 +1,158 @@
-// ======================== SIDEBAR & UI ========================
-function toggleSub(element) {
-    const parent = element.closest('.nav-item');
-    parent.classList.toggle('open');
-}
-function setSubActive(el) {
-    document.querySelectorAll('.submenu li').forEach(li => li.classList.remove('active'));
-    el.classList.add('active');
-}
-function setNavActive(el) {
-    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-    el.closest('.nav-item').classList.add('active');
+/* ═══════════ CHART DATA ═══════════ */
+const chartData = {
+	weekly:  { labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], revenue:[35,20,50,48,38,28,15], sales:[22,14,30,28,25,18,10], bigNum:'$495K' },
+	monthly: { labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], revenue:[35,20,50,50,35,10,50,38,30,28,8,15], sales:[25,15,30,20,22,8,38,28,22,20,5,10], bigNum:'$1.2M' },
+	yearly:  { labels:['2020','2021','2022','2023','2024','2025'], revenue:[28,38,42,50,55,60], sales:[18,25,30,35,40,48], bigNum:'$5.8M' }
+};
+
+function buildRevChart(tabKey) {
+	const d = chartData[tabKey];
+	const area = document.getElementById('revenueChart');
+	const xAxis = document.getElementById('xAxisLabels');
+	area.innerHTML = ''; xAxis.innerHTML = '';
+	document.getElementById('revBigNum').textContent = d.bigNum;
+
+	d.labels.forEach((m, i) => {
+		const col = document.createElement('div');
+		col.className = 'bar-col';
+
+		const rH = Math.round((d.revenue[i] / 60) * 100);
+		const sH = Math.round((d.sales[i] / 60) * 100);
+
+		col.innerHTML = `
+			<div class="bar-pair">
+				<div class="bar bar-primary" style="--bh:${rH}" data-tip="$${d.revenue[i]}k"></div>
+				<div class="bar bar-secondary" style="--bh:${sH}" data-tip="$${d.sales[i]}k"></div>
+			</div>
+		`;
+
+		area.appendChild(col);
+
+		const lbl = document.createElement('span');
+		lbl.textContent = m;
+		xAxis.appendChild(lbl);
+	});
+
+	setTimeout(() => {
+		document.querySelectorAll('.bar').forEach((b, i) => {
+			setTimeout(() => b.classList.add('rendered'), i * 30);
+		});
+	}, 50);
 }
 
-// Sidebar collapse
-const sidebar = document.getElementById('sidebar');
-const toggleBtn = document.getElementById('sidebarToggle');
-const layout = document.getElementById('layout');
-if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-        layout.classList.toggle('sidebar-collapsed');
-        const icon = document.getElementById('toggleIcon');
-        if (sidebar.classList.contains('collapsed')) icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
-        else icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
-    });
+function buildProfitChart() {
+	const data = [2,4,3,7,4,6,5,9,7,12,10,15];
+	const c = document.getElementById('profitBars');
+
+	data.forEach(v => {
+		const col = document.createElement('div');
+		col.className = 'pb-col';
+
+		col.innerHTML = `<div class="pb-bar" style="--ph:${(v/15)*100}"></div>`;
+		c.appendChild(col);
+	});
+
+	setTimeout(() => {
+		document.querySelectorAll('.pb-bar').forEach((b, i) => {
+			setTimeout(() => b.classList.add('rendered'), i * 50 + 500);
+		});
+	}, 300);
 }
 
-// Dropdowns: search, apps, messages, notifications, user
-function setupDropdown(btnId, dropdownId) {
-    const btn = document.getElementById(btnId);
-    const dd = document.getElementById(dropdownId);
-    if (!btn || !dd) return;
-    btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        document.querySelectorAll('.open').forEach(el => { if (el !== dd) el.classList.remove('open'); });
-        dd.classList.toggle('open');
-    });
-    document.addEventListener('click', (e) => { if (!dd.contains(e.target) && e.target !== btn) dd.classList.remove('open'); });
-}
-setupDropdown('appsBtn', 'appsDropdown');
-setupDropdown('msgBtn', 'msgDropdown');
-setupDropdown('notifBtn', 'notifDropdown');
-setupDropdown('userChip', 'userDropdown');
-
-// Search dropdown
-const searchWrap = document.getElementById('searchBoxWrap');
-const searchInput = document.getElementById('searchInput');
-const searchDropdown = document.getElementById('searchDropdown');
-if (searchInput) {
-    searchInput.addEventListener('focus', () => searchDropdown.classList.add('open'));
-    document.addEventListener('click', (e) => { if (!searchWrap.contains(e.target)) searchDropdown.classList.remove('open'); });
+/* ═══════════ TAB SWITCHING ═══════════ */
+function switchTab(btn, tabKey) {
+	document.querySelectorAll('#revTabs .tab-btn').forEach(b => b.classList.remove('active'));
+	btn.classList.add('active');
+	buildRevChart(tabKey);
 }
 
-// Fullscreen
-const fullBtn = document.getElementById('fullscreenBtn');
-if (fullBtn) {
-    fullBtn.addEventListener('click', () => {
-        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-        else document.exitFullscreen();
-    });
-}
+/* ═══════════ SIDEBAR TOGGLE ═══════════ */
+document.getElementById('sidebarToggle').addEventListener('click', function () {
+	document.getElementById('sidebar').classList.toggle('collapsed');
+	document.getElementById('layout').classList.toggle('sidebar-collapsed');
 
-// ======================== TOAST ========================
-function showToast(message, type = 'info') {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i><span>${message}</span>`;
-    container.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
-}
-
-// ======================== MODALS ========================
-function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-function openDealModal(company, value, growth, region) {
-    document.getElementById('dealCompany').innerText = company;
-    document.getElementById('dealValue').innerText = value;
-    document.getElementById('dealGrowth').innerText = growth;
-    document.getElementById('dealRegion').innerText = region;
-    openModal('dealModal');
-}
-function openSettingsModal() { openModal('settingsModal'); }
-function openProfileModal() { openModal('profileModal'); }
-function openAddMemberModal() { openModal('addMemberModal'); }
-function openDateModal() { openModal('dateModal'); }
-function confirmLogout() { openModal('logoutModal'); }
-function setDateRange(range) { document.getElementById('dateRange').innerText = range; showToast(`Date range set to ${range}`, 'success'); closeModal('dateModal'); }
-function refreshDashboard() { showToast('Dashboard refreshed', 'success'); }
-function downloadReport() { showToast('Report downloaded', 'success'); }
-function switchTab(btn, period) {
-    document.querySelectorAll('#revTabs .tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('revBigNum').innerText = period === 'weekly' ? '$495K' : period === 'monthly' ? '$1.2M' : '$14.5M';
-    showToast(`Switched to ${period} view`, 'info');
-}
-
-// ======================== CHARTS SIMULATION ========================
-function renderRevenueChart() {
-    const container = document.getElementById('revenueChart');
-    if (!container) return;
-    const weeks = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const xLabels = document.getElementById('xAxisLabels');
-    xLabels.innerHTML = weeks.map(day => `<span>${day}</span>`).join('');
-    container.innerHTML = weeks.map(() => `<div class="bar-col"><div class="bar-pair"><div class="bar bar-primary" style="height:${Math.floor(40 + Math.random() * 50)}px"></div><div class="bar bar-secondary" style="height:${Math.floor(20 + Math.random() * 40)}px"></div></div></div>`).join('');
-}
-function renderProfitBars() {
-    const profitContainer = document.getElementById('profitBars');
-    if (!profitContainer) return;
-    const values = [45, 68, 52, 78, 63, 88, 72];
-    profitContainer.innerHTML = values.map(v => `<div class="pb-col"><div class="pb-bar" style="height:${v}px"></div></div>`).join('');
-}
-window.addEventListener('DOMContentLoaded', () => {
-    renderRevenueChart();
-    renderProfitBars();
-    // apply donut animation
-    document.querySelectorAll('.donut-seg').forEach(seg => seg.classList.add('go'));
-    document.querySelectorAll('.ov-seg').forEach(seg => seg.classList.add('go'));
+	const icon = document.getElementById('toggleIcon');
+	icon.classList.toggle('fa-chevron-left');
+	icon.classList.toggle('fa-chevron-right');
 });
+
+/* ═══════════ SUBMENU */
+function toggleSub(row) {
+	const item = row.closest('.nav-item');
+	const isOpen = item.classList.contains('open');
+
+	document.querySelectorAll('.nav-item.has-sub').forEach(i => i.classList.remove('open'));
+	if (!isOpen) item.classList.add('open');
+}
+
+function setSubActive(li) {
+	document.querySelectorAll('.submenu li').forEach(i => i.classList.remove('active'));
+	li.classList.add('active');
+}
+
+function setNavActive(row) {
+	document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+	row.closest('.nav-item').classList.add('active');
+}
+
+/* ═══════════ DROPDOWNS */
+function toggleDropdown(btn, dropdown) {
+	const isOpen = dropdown.classList.contains('open');
+	closeAllDropdowns();
+	if (!isOpen) dropdown.classList.add('open');
+}
+
+function closeAllDropdowns() {
+	document.querySelectorAll('.notif-dropdown,.msg-dropdown,.apps-dropdown,.user-dropdown,.search-dropdown')
+		.forEach(d => d.classList.remove('open'));
+}
+
+/* ═══════════ EVENTS */
+document.addEventListener('DOMContentLoaded', () => {
+
+	document.getElementById('notifBtn').onclick = e => {
+		e.stopPropagation();
+		toggleDropdown(e.target, document.getElementById('notifDropdown'));
+	};
+
+	document.getElementById('msgBtn').onclick = e => {
+		e.stopPropagation();
+		toggleDropdown(e.target, document.getElementById('msgDropdown'));
+	};
+
+	document.getElementById('appsBtn').onclick = e => {
+		e.stopPropagation();
+		toggleDropdown(e.target, document.getElementById('appsDropdown'));
+	};
+
+	document.getElementById('userChip').onclick = e => {
+		e.stopPropagation();
+		toggleDropdown(e.target, document.getElementById('userDropdown'));
+	};
+
+	document.addEventListener('click', closeAllDropdowns);
+
+	/* INIT */
+	buildRevChart('weekly');
+	buildProfitChart();
+
+	setTimeout(() => showToast('Welcome back, Admin! Dashboard loaded.', 'success'), 1000);
+});
+
+/* ═══════════ TOAST */
+function showToast(msg, type = 'info') {
+	const icons = { success:'fa-circle-check', info:'fa-circle-info', warning:'fa-triangle-exclamation' };
+
+	const container = document.getElementById('toastContainer');
+	const toast = document.createElement('div');
+
+	toast.className = `toast toast-${type}`;
+	toast.innerHTML = `<i class="fas ${icons[type]}"></i><span>${msg}</span>`;
+
+	container.appendChild(toast);
+
+	setTimeout(() => {
+		toast.style.opacity = '0';
+		setTimeout(() => toast.remove(), 300);
+	}, 2800);
+}
