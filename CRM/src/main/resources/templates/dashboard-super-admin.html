@@ -1,607 +1,920 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | CRMS - Advanced</title>
-    <link rel="stylesheet" th:href="@{/dashboard-super-admin.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        /* ── Welcome label (topbar right, matching reference image) ── */
-        .welcome-label {
-            font-size: 0.82rem; font-weight: 600;
-            color: rgba(255,255,255,0.75);
-            white-space: nowrap;
-            margin-left: 0.3rem;
-        }
-        .welcome-label strong { color: #fff; }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<title>CRMS | Super Admin · Teal Depths Dashboard</title>
+	<!-- Font Awesome 6 -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<!-- Main Stylesheet -->
 
-        /* ── Page subtitle ── */
-        .page-subtitle {
-            font-size: 0.78rem; color: var(--muted);
-            margin-top: 0.15rem; font-weight: 500;
-        }
-
-        /* ── KPI card left wrapper ── */
-        .kpi-left { flex: 1; min-width: 0; }
-    </style>
+	<link rel="stylesheet" th:href="@{/dashboard-admin.css}" />
+	<!-- Main Script -->
+	<script src="dashboard-super-admin.js" defer></script>
 </head>
+
 <body>
 
-<!-- ===================== TOPBAR ===================== -->
-<header class="topbar">
-    <div class="topbar-left">
-        <div class="brand">
-            <div class="brand-icon"><i class="fas fa-fire"></i></div>
-            <span class="brand-name">CRMS</span>
-        </div>
-        <button class="sidebar-collapse-btn" id="sidebarToggle"><i class="fas fa-chevron-left"></i></button>
-    </div>
-    <div class="topbar-center">
-        <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search Keyword">
-            <kbd>⌘K</kbd>
-        </div>
-    </div>
-    <div class="topbar-right">
-        <button class="tb-btn"><i class="fas fa-expand"></i></button>
-        <button class="tb-btn"><i class="fas fa-moon"></i></button>
-        <button class="tb-btn"><i class="fas fa-th"></i></button>
-        <button class="tb-btn"><i class="fas fa-shield-alt"></i></button>
-        <button class="tb-btn"><i class="fas fa-smile"></i></button>
-        <button class="tb-btn notif"><i class="fas fa-comment-dots"></i></button>
-        <button class="tb-btn notif"><i class="fas fa-bell"></i><span class="badge">3</span></button>
-        <div class="user-avatar-wrap">
-            <div class="user-avatar"></div>
-            <span class="user-online"></span>
-        </div>
-        <span class="welcome-label">Welcome, <strong>Admin</strong></span>
-    </div>
-</header>
+	<!-- ═══════════════════ TOPBAR ═══════════════════ -->
+	<header class="topbar">
+		<div class="topbar-left">
+			<a href="#" class="brand">
+				<div class="brand-icon"><i class="fas fa-fire-flame-curved"></i></div>
+				<span class="brand-name">CRMS</span>
+			</a>
+			<button class="sidebar-collapse-btn" id="sidebarToggle" title="Toggle sidebar">
+				<i class="fas fa-chevron-left" id="toggleIcon"></i>
+			</button>
+		</div>
 
-<div class="layout">
+		<div class="topbar-center">
+			<div class="search-box" id="searchBoxWrap">
+				<i class="fas fa-magnifying-glass"></i>
+				<input type="text" placeholder="Search anything…" id="searchInput">
+				<kbd id="searchKbd">⌘K</kbd>
+				<div class="search-dropdown" id="searchDropdown">
+					<div class="search-drop-section">Recent</div>
+					<div class="search-drop-item"><i class="fas fa-handshake"></i><span><strong>Annual Software</strong>
+							— Deal</span></div>
+					<div class="search-drop-item"><i class="fas fa-user"></i><span><strong>Robert Johnson</strong> —
+							Contact</span></div>
+					<div class="search-drop-item"><i class="fas fa-building"></i><span><strong>NovaWave LLC</strong> —
+							Company</span></div>
+					<div class="search-drop-divider"></div>
+					<div class="search-drop-section">Quick Actions</div>
+					<div class="search-drop-item"><i class="fas fa-plus"></i><span>New Deal</span></div>
+					<div class="search-drop-item"><i class="fas fa-user-plus"></i><span>Add Contact</span></div>
+					<div class="search-drop-item"><i class="fas fa-calendar-plus"></i><span>Schedule Meeting</span>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <!-- ===================== SIDEBAR ===================== -->
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-section-label">MAIN MENU</div>
+		<div class="topbar-right">
+			<button class="tb-btn" id="fullscreenBtn" title="Fullscreen"><i class="fas fa-expand"
+					id="fullscreenIcon"></i></button>
+			<button class="tb-btn" id="darkModeBtn" title="Dark mode"><i class="fas fa-moon"
+					id="darkModeIcon"></i></button>
 
-        <div class="nav-group">
-            <div class="nav-item has-submenu open active">
-                <div class="nav-item-row">
-                    <span class="nav-icon red"><i class="fas fa-th-large"></i></span>
-                    <span class="nav-label">Dashboard</span>
-                    <i class="fas fa-chevron-up nav-arrow"></i>
-                </div>
-                <ul class="submenu">
-                    <li class="active"><span class="dot dot-red"></span>Dashboard</li>
-                    <li><span class="dot"></span>Sales Overview</li>
-                    <li><span class="dot"></span>Executive Dashboard</li>
-                    <li><span class="dot"></span>Deals Dashboard</li>
-                    <li><span class="dot"></span>Leads Dashboard</li>
-                    <li><span class="dot"></span>Project Dashboard</li>
-                    <li><span class="dot"></span>Revenue Summary</li>
-                    <li><span class="dot"></span>Growth Dashboard</li>
-                </ul>
-            </div>
+			<!-- Apps dropdown -->
+			<div class="apps-wrapper">
+				<button class="tb-btn" id="appsBtn" title="Apps"><i class="fas fa-border-all"></i></button>
+				<div class="apps-dropdown" id="appsDropdown">
+					<div class="apps-grid">
+						<div class="app-item">
+							<div class="app-icon" style="background:linear-gradient(135deg,#0d9488,#0891b2)"><i
+									class="fas fa-chart-line"></i></div><span class="app-label">Analytics</span>
+						</div>
+						<div class="app-item">
+							<div class="app-icon" style="background:linear-gradient(135deg,#059669,#0d9488)"><i
+									class="fas fa-users"></i></div><span class="app-label">Contacts</span>
+						</div>
+						<div class="app-item">
+							<div class="app-icon" style="background:linear-gradient(135deg,#0891b2,#06b6d4)"><i
+									class="fas fa-tasks"></i></div><span class="app-label">Tasks</span>
+						</div>
+						<div class="app-item">
+							<div class="app-icon" style="background:linear-gradient(135deg,#0d9488,#059669)"><i
+									class="fas fa-envelope"></i></div><span class="app-label">Email</span>
+						</div>
+						<div class="app-item">
+							<div class="app-icon" style="background:linear-gradient(135deg,#0369a1,#0891b2)"><i
+									class="fas fa-calendar"></i></div><span class="app-label">Calendar</span>
+						</div>
+						<div class="app-item">
+							<div class="app-icon" style="background:linear-gradient(135deg,#14b8a6,#34d399)"><i
+									class="fas fa-file-alt"></i></div><span class="app-label">Reports</span>
+						</div>
+					</div>
+				</div>
+			</div>
 
-            <div class="nav-item has-submenu">
-                <div class="nav-item-row">
-                    <span class="nav-icon"><i class="fas fa-th"></i></span>
-                    <span class="nav-label">Applications</span>
-                    <i class="fas fa-chevron-down nav-arrow"></i>
-                </div>
-            </div>
+			<button class="tb-btn" title="Security"><i class="fas fa-shield-halved"></i></button>
+			<div class="tb-divider"></div>
 
-            <div class="nav-item has-submenu">
-                <div class="nav-item-row">
-                    <span class="nav-icon"><i class="fas fa-user-shield"></i></span>
-                    <span class="nav-label">Super Admin</span>
-                    <i class="fas fa-chevron-down nav-arrow"></i>
-                </div>
-            </div>
+			<!-- Messages dropdown -->
+			<div class="msg-wrapper">
+				<button class="tb-btn" id="msgBtn" title="Messages"><i class="fas fa-comment-dots"></i></button>
+				<div class="msg-dropdown" id="msgDropdown">
+					<div class="msg-header">
+						<h4>Messages</h4>
+					</div>
+					<div class="msg-item">
+						<div class="msg-av" style="background:linear-gradient(135deg,#0d9488,#0891b2)">RJ</div>
+						<div class="msg-body">
+							<div class="msg-name">Robert Johnson</div>
+							<div class="msg-text">Hey, can we review the Annual Software deal?</div>
+						</div>
+						<div class="msg-meta"><span class="msg-time">2m</span><span class="msg-badge">2</span></div>
+					</div>
+					<div class="msg-item">
+						<div class="msg-av" style="background:linear-gradient(135deg,#059669,#0d9488)">IC</div>
+						<div class="msg-body">
+							<div class="msg-name">Isabella Cooper</div>
+							<div class="msg-text">The CRM onboarding is ready for review</div>
+						</div>
+						<div class="msg-meta"><span class="msg-time">15m</span></div>
+					</div>
+					<div class="msg-item">
+						<div class="msg-av" style="background:linear-gradient(135deg,#0891b2,#14b8a6)">SP</div>
+						<div class="msg-body">
+							<div class="msg-name">Sophia Parker</div>
+							<div class="msg-text">BrightWorks presentation confirmed ✓</div>
+						</div>
+						<div class="msg-meta"><span class="msg-time">1h</span></div>
+					</div>
+					<div class="msg-footer"><a href="#">View all messages</a></div>
+				</div>
+			</div>
 
-            <div class="nav-item has-submenu">
-                <div class="nav-item-row">
-                    <span class="nav-icon"><i class="fas fa-layer-group"></i></span>
-                    <span class="nav-label">Layouts</span>
-                    <i class="fas fa-chevron-down nav-arrow"></i>
-                </div>
-            </div>
-        </div>
+			<!-- Notifications dropdown -->
+			<div class="notif-wrapper">
+				<button class="tb-btn" id="notifBtn" title="Notifications" style="position:relative"><i
+						class="fas fa-bell"></i><span class="tb-badge" id="notifBadge">3</span></button>
+				<div class="notif-dropdown" id="notifDropdown">
+					<div class="notif-header">
+						<h4>Notifications</h4><span class="notif-mark-all" id="markAllRead">Mark all read</span>
+					</div>
+					<div class="notif-item unread">
+						<div class="notif-icon ni-indigo"><i class="fas fa-handshake"></i></div>
+						<div class="notif-body">
+							<div class="notif-title">New Deal Assigned</div>
+							<div class="notif-desc">Annual Software deal assigned to you by Admin</div>
+							<div class="notif-time">2 minutes ago</div>
+						</div>
+					</div>
+					<div class="notif-item unread">
+						<div class="notif-icon ni-emerald"><i class="fas fa-check-circle"></i></div>
+						<div class="notif-body">
+							<div class="notif-title">Deal Won!</div>
+							<div class="notif-desc">Enterprise Plan deal closed — $10,36,390</div>
+							<div class="notif-time">1 hour ago</div>
+						</div>
+					</div>
+					<div class="notif-item unread">
+						<div class="notif-icon ni-amber"><i class="fas fa-calendar"></i></div>
+						<div class="notif-body">
+							<div class="notif-title">Meeting Reminder</div>
+							<div class="notif-desc">NovaWave LLC call in 30 minutes</div>
+							<div class="notif-time">3 hours ago</div>
+						</div>
+					</div>
+					<div class="notif-footer"><a href="#">View all notifications</a></div>
+				</div>
+			</div>
 
-        <div class="sidebar-section-label">CRM</div>
-        <div class="nav-group">
-            <div class="nav-item">
-                <div class="nav-item-row">
-                    <span class="nav-icon"><i class="fas fa-user-friends"></i></span>
-                    <span class="nav-label">Contacts</span>
-                </div>
-            </div>
-            <div class="nav-item">
-                <div class="nav-item-row">
-                    <span class="nav-icon"><i class="fas fa-users"></i></span>
-                    <span class="nav-label">Employees</span>
-                </div>
-            </div>
-            <div class="nav-item">
-                <div class="nav-item-row">
-                    <span class="nav-icon"><i class="fas fa-calendar-check"></i></span>
-                    <span class="nav-label">Attendance</span>
-                </div>
-            </div>
-            <div class="nav-item">
-                <div class="nav-item-row">
-                    <span class="nav-icon"><i class="fas fa-tasks"></i></span>
-                    <span class="nav-label">Tasks</span>
-                </div>
-            </div>
-            <div class="nav-item">
-                <div class="nav-item-row">
-                    <span class="nav-icon"><i class="fas fa-people-group"></i></span>
-                    <span class="nav-label">Teams</span>
-                </div>
-            </div>
-            <div class="nav-item">
-                <div class="nav-item-row">
-                    <span class="nav-icon"><i class="fas fa-video"></i></span>
-                    <span class="nav-label">Meetings</span>
-                </div>
-            </div>
-            <div class="nav-item">
-                <div class="nav-item-row">
-                    <span class="nav-icon"><i class="fas fa-calendar-alt"></i></span>
-                    <span class="nav-label">Calendar</span>
-                </div>
-            </div>
-            <div class="nav-item">
-                <div class="nav-item-row">
-                    <span class="nav-icon"><i class="fas fa-umbrella-beach"></i></span>
-                    <span class="nav-label">Leave</span>
-                </div>
-            </div>
-        </div>
+			<div class="tb-divider"></div>
 
-        <div class="sidebar-section-label">SYSTEM</div>
-        <div class="nav-group">
-            <div class="nav-item">
-                <div class="nav-item-row">
-                    <span class="nav-icon"><i class="fas fa-cog"></i></span>
-                    <span class="nav-label">Settings</span>
-                </div>
-            </div>
-        </div>
+			<!-- User chip with dropdown -->
+			<div class="user-chip" id="userChip">
+				<div class="user-avatar"><span class="user-dot"></span></div>
+				<div class="user-info"><span class="user-name">Admin</span><span class="user-role">Super Admin</span>
+				</div>
+				<div class="user-dropdown" id="userDropdown">
+					<div class="user-drop-head">
+						<div class="udh-av">
+							<div class="udh-dot"></div>
+						</div>
+						<div>
+							<div class="udh-name">Admin User</div>
+							<div class="udh-email">admin@crms.io</div>
+						</div>
+					</div>
+					<div class="user-drop-item"><i class="fas fa-user"></i>My Profile</div>
+					<div class="user-drop-item"><i class="fas fa-gear"></i>Settings</div>
+					<div class="user-drop-item"><i class="fas fa-bell"></i>Notifications</div>
+					<div class="user-drop-item"><i class="fas fa-palette"></i>Appearance</div>
+					<div class="user-drop-divider"></div>
+					<div class="user-drop-item danger" id="logoutBtn"><i
+							class="fas fa-arrow-right-from-bracket"></i>Logout</div>
+				</div>
+			</div>
+		</div>
+	</header>
 
-        <div class="sidebar-bottom">
-            <button class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </button>
-        </div>
-    </aside>
+	<div class="layout" id="layout">
 
-    <!-- ===================== MAIN ===================== -->
-    <main class="main">
+		<!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+		<aside class="sidebar" id="sidebar">
+			<span class="nav-section">Main Menu</span>
+			<div class="nav-group">
+				<div class="nav-item has-sub open active">
+					<div class="nav-row" onclick="toggleSub(this)" data-tooltip="Dashboard">
+						<span class="nav-icon"><i class="fas fa-chart-tree-map"></i></span>
+						<span class="nav-label">Dashboard</span>
+						<i class="fas fa-chevron-down nav-arrow"></i>
+					</div>
+					<ul class="submenu">
+						<li class="active" onclick="setSubActive(this)"><span class="sub-dot"></span>Dashboard</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Sales Overview</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Executive Dashboard</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Deals Dashboard</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Leads Dashboard</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Project Dashboard</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Revenue Summary</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Growth Dashboard</li>
+					</ul>
+				</div>
+				<div class="nav-item has-sub">
+					<div class="nav-row" onclick="toggleSub(this)" data-tooltip="Applications">
+						<span class="nav-icon"><i class="fas fa-border-all"></i></span>
+						<span class="nav-label">Applications</span>
+						<i class="fas fa-chevron-down nav-arrow"></i>
+					</div>
+					<ul class="submenu">
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Email</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Chat</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>File Manager</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Kanban</li>
+					</ul>
+				</div>
+				<div class="nav-item has-sub">
+					<div class="nav-row" onclick="toggleSub(this)" data-tooltip="Super Admin">
+						<span class="nav-icon"><i class="fas fa-user-shield"></i></span>
+						<span class="nav-label">Super Admin</span>
+						<i class="fas fa-chevron-down nav-arrow"></i>
+					</div>
+					<ul class="submenu">
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Users</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Roles & Permissions</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Audit Log</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>System Settings</li>
+					</ul>
+				</div>
+				<div class="nav-item has-sub">
+					<div class="nav-row" onclick="toggleSub(this)" data-tooltip="Layouts">
+						<span class="nav-icon"><i class="fas fa-layer-group"></i></span>
+						<span class="nav-label">Layouts</span>
+						<i class="fas fa-chevron-down nav-arrow"></i>
+					</div>
+					<ul class="submenu">
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Default</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Compact</li>
+						<li onclick="setSubActive(this)"><span class="sub-dot"></span>Modern</li>
+					</ul>
+				</div>
+			</div>
+			<span class="nav-section">CRM</span>
+			<div class="nav-group">
+				<div class="nav-item">
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Contacts"><span class="nav-icon"><i
+								class="fas fa-address-book"></i></span><span class="nav-label">Contacts</span></div>
+				</div>
+				<div class="nav-item">
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Employees"><span class="nav-icon"><i
+								class="fas fa-users"></i></span><span class="nav-label">Employees</span></div>
+				</div>
+				<div class="nav-item">
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Attendance"><span
+							class="nav-icon"><i class="fas fa-calendar-check"></i></span><span
+							class="nav-label">Attendance</span></div>
+				</div>
+				<div class="nav-item">
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Tasks"><span class="nav-icon"><i
+								class="fas fa-list-check"></i></span><span class="nav-label">Tasks</span></div>
+				</div>
+				<div class="nav-item">
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Teams"><span class="nav-icon"><i
+								class="fas fa-people-group"></i></span><span class="nav-label">Teams</span></div>
+				</div>
+				<div class="nav-item">
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Meetings"><span class="nav-icon"><i
+								class="fas fa-video"></i></span><span class="nav-label">Meetings</span></div>
+				</div>
+				<div class="nav-item">
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Calendar"><span class="nav-icon"><i
+								class="fas fa-calendar-days"></i></span><span class="nav-label">Calendar</span></div>
+				</div>
+				<div class="nav-item">
+					<div class="nav-row" onclick="setNavActive(this)" data-tooltip="Leave"><span class="nav-icon"><i
+								class="fas fa-umbrella-beach"></i></span><span class="nav-label">Leave</span></div>
+				</div>
+			</div>
+			<span class="nav-section">System</span>
+			<div class="nav-group">
+				<div class="nav-item">
+					<div class="nav-row" onclick="setNavActive(this); openSettingsModal()" data-tooltip="Settings"><span
+							class="nav-icon"><i class="fas fa-gear"></i></span><span class="nav-label">Settings</span>
+					</div>
+				</div>
+			</div>
+			<div class="sidebar-footer">
+				<div class="sidebar-footer-meta">
+					<div class="sf-av"></div>
+					<div>
+						<div class="sf-name">Admin User</div>
+						<div class="sf-role">Super Administrator</div>
+					</div>
+				</div>
+				<button class="logout-btn" onclick="confirmLogout()"><i
+						class="fas fa-arrow-right-from-bracket"></i><span class="logout-text">Logout</span></button>
+			</div>
+		</aside>
 
-        <!-- Page Header -->
-        <div class="page-header">
-            <div>
-                <h1 class="page-title">Dashboard</h1>
-                <p class="page-subtitle">Real-time insights across attendance, tasks, leaves and workforce</p>
-            </div>
-            <div class="page-header-right">
-                <div class="avatar-stack">
-                    <div class="av av1"></div>
-                    <div class="av av2"></div>
-                    <div class="av av3"></div>
-                    <div class="av av4"></div>
-                    <div class="av av5"></div>
-                    <div class="av-add"><i class="fas fa-plus"></i></div>
-                </div>
-                <div class="date-range-btn">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>19 Mar 26 – 17 Apr 26</span>
-                </div>
-                <button class="icon-btn"><i class="fas fa-download"></i></button>
-                <button class="icon-btn"><i class="fas fa-sync-alt"></i></button>
-                <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
-            </div>
-        </div>
+		<!-- ═══════════════════ MAIN ═══════════════════ -->
+		<main class="main">
+			<div class="page-header">
+				<div class="ph-left">
+					<div class="page-eyebrow">Super Admin</div>
+					<h1 class="page-title">Dashboard</h1>
+					<p class="page-subtitle">Real-time insights across attendance, tasks, leaves and workforce</p>
+				</div>
+				<div class="ph-right">
+					<div class="av-stack">
+						<div class="av-item av-a" title="Robert Johnson"></div>
+						<div class="av-item av-b" title="Isabella Cooper"></div>
+						<div class="av-item av-c" title="John Smith"></div>
+						<div class="av-item av-d" title="Sophia Parker"></div>
+						<div class="av-item av-e" title="Emma Reynolds"></div>
+						<div class="av-plus" title="Add member" onclick="openAddMemberModal()"><i
+								class="fas fa-plus"></i></div>
+					</div>
+					<button class="date-btn" onclick="openDateModal()"><i class="far fa-calendar"></i><span
+							id="dateRange">19 Mar 26 – 17 Apr 26</span><i class="fas fa-chevron-down"
+							style="font-size:.6rem;opacity:.6"></i></button>
+					<button class="icon-btn" title="Download Report" onclick="downloadReport()"><i
+							class="fas fa-arrow-down-to-line"></i></button>
+					<button class="icon-btn" title="Refresh" onclick="refreshDashboard()"><i
+							class="fas fa-arrows-rotate" id="refreshIcon"></i></button>
+					<button class="icon-btn" title="Profile" onclick="openProfileModal()"><i
+							class="fas fa-user-circle"></i></button>
+				</div>
+			</div>
 
-        <!-- ---- KPI CARDS ---- -->
-        <section class="kpi-grid">
-            <div class="kpi-card">
-                <div class="kpi-left">
-                    <p class="kpi-label">Revenue</p>
-                    <h2 class="kpi-value">$15,44,540</h2>
-                    <div class="kpi-change positive"><i class="fas fa-arrow-up"></i>+2.5% From Last Week</div>
-                </div>
-                <div class="kpi-icon"><i class="fas fa-dollar-sign"></i></div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-left">
-                    <p class="kpi-label">Active Deals</p>
-                    <h2 class="kpi-value">147</h2>
-                    <div class="kpi-change negative"><i class="fas fa-arrow-down"></i>-21.15% From Last Week</div>
-                </div>
-                <div class="kpi-icon"><i class="fas fa-handshake"></i></div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-left">
-                    <p class="kpi-label">Conversion Rate</p>
-                    <h2 class="kpi-value">32.8%</h2>
-                    <div class="kpi-change positive"><i class="fas fa-arrow-up"></i>+15.5% From Last Week</div>
-                </div>
-                <div class="kpi-icon"><i class="fas fa-chart-line"></i></div>
-            </div>
-            <div class="kpi-card kpi-card--contacts">
-                <div class="kpi-left">
-                    <p class="kpi-label">Total Contacts</p>
-                    <h2 class="kpi-value">4569 <span class="kpi-sub-badge">+2.5%</span></h2>
-                    <div class="kpi-avatars">
-                        <div class="av av1"></div><div class="av av2"></div><div class="av av3"></div>
-                        <span class="av-more">+4 From Last Week</span>
-                    </div>
-                </div>
-                <div class="kpi-mini-bars">
-                    <span style="--h:40%"></span><span style="--h:60%"></span>
-                    <span style="--h:75%"></span><span style="--h:55%"></span><span style="--h:90%"></span>
-                </div>
-            </div>
-        </section>
+			<!-- KPI CARDS -->
+			<section class="kpi-grid">
+				<div class="kpi-card" onclick="showToast('Revenue details loaded','info')">
+					<div class="kpi-body">
+						<p class="kpi-label">Total Revenue</p>
+						<h2 class="kpi-value">$15,44,540</h2><span class="kpi-change kpi-up"><i
+								class="fas fa-arrow-trend-up"></i>+2.5% vs Last Week</span>
+					</div>
+					<div class="kpi-icon kpi-icon-1"><i class="fas fa-dollar-sign"></i></div>
+				</div>
+				<div class="kpi-card" onclick="showToast('Deals data refreshed','info')">
+					<div class="kpi-body">
+						<p class="kpi-label">Active Deals</p>
+						<h2 class="kpi-value">147</h2><span class="kpi-change kpi-down"><i
+								class="fas fa-arrow-trend-down"></i>-21.15% vs Last Week</span>
+					</div>
+					<div class="kpi-icon kpi-icon-2"><i class="fas fa-handshake"></i></div>
+				</div>
+				<div class="kpi-card" onclick="showToast('Conversion analytics loaded','info')">
+					<div class="kpi-body">
+						<p class="kpi-label">Conversion Rate</p>
+						<h2 class="kpi-value">32.8%</h2><span class="kpi-change kpi-up"><i
+								class="fas fa-arrow-trend-up"></i>+15.5% vs Last Week</span>
+					</div>
+					<div class="kpi-icon kpi-icon-3"><i class="fas fa-chart-line"></i></div>
+				</div>
+				<div class="kpi-card" onclick="showToast('Contacts list opened','info')">
+					<div class="kpi-body">
+						<p class="kpi-label">Total Contacts</p>
+						<h2 class="kpi-value">4,569 <small
+								style="font-size:.65rem;color:#0a6b60;background:rgba(13,148,136,.12);padding:2px 6px;border-radius:20px;">+2.5%</small>
+						</h2>
+						<div class="kpi-av-row">
+							<div class="av-item av-a"></div>
+							<div class="av-item av-b"></div>
+							<div class="av-item av-c"></div><span class="kpi-av-more">+4 From Last Week</span>
+						</div>
+					</div>
+					<div class="sparkline" id="sparkline">
+						<div class="sp-bar" style="height:30%"></div>
+						<div class="sp-bar" style="height:50%"></div>
+						<div class="sp-bar" style="height:65%"></div>
+						<div class="sp-bar" style="height:45%"></div>
+						<div class="sp-bar" style="height:80%"></div>
+						<div class="sp-bar" style="height:60%"></div>
+						<div class="sp-bar" style="height:95%"></div>
+					</div>
+				</div>
+			</section>
 
-        <!-- ---- ROW: REVENUE ANALYTICS + TRAFFIC SOURCES ---- -->
-        <section class="charts-row">
+			<!-- CHARTS ROW -->
+			<section class="charts-row">
+				<div class="card card--revenue">
+					<div class="card-head">
+						<h3 class="card-title"><span class="title-accent"></span>Revenue Analytics</h3>
+						<div class="tabs" id="revTabs"><button class="tab-btn active"
+								onclick="switchTab(this,'weekly')">Weekly</button><button class="tab-btn"
+								onclick="switchTab(this,'monthly')">Monthly</button><button class="tab-btn"
+								onclick="switchTab(this,'yearly')">Yearly</button></div>
+					</div>
+					<div class="rev-meta">
+						<div><span class="rev-big-num" id="revBigNum">$495K</span><span class="rev-label">Revenue with
+								Sales (USD)</span></div>
+						<div class="legend">
+							<div class="leg-item">
+								<div class="leg-dot" style="background:var(--teal)"></div><span>Revenue</span>
+							</div>
+							<div class="leg-item">
+								<div class="leg-dot" style="background:rgba(13,148,136,.3)"></div><span>Sales</span>
+							</div>
+						</div>
+					</div>
+					<div class="bar-chart-wrap">
+						<div class="y-axis">
+							<span>$60k</span><span>$50k</span><span>$40k</span><span>$30k</span><span>$20k</span><span>$10k</span><span>$0k</span>
+						</div>
+						<div class="bar-chart-area" id="revenueChart"></div>
+					</div>
+					<div class="x-axis" id="xAxisLabels"></div>
+				</div>
+				<div class="card card--traffic">
+					<div class="card-head">
+						<h3 class="card-title"><span class="title-accent"></span>Traffic Sources</h3><button
+							class="icon-btn-sm" onclick="showToast('Traffic report exported','success')"><i
+								class="fas fa-arrow-right"></i></button>
+					</div>
+					<div class="donut-wrap"><svg viewBox="0 0 160 160" class="donut-svg">
+							<circle class="donut-bg" cx="80" cy="80" r="60" />
+							<circle class="donut-seg seg-emerald" cx="80" cy="80" r="60" stroke-dashoffset="0"
+								transform="rotate(-90 80 80)" />
+							<circle class="donut-seg seg-indigo" cx="80" cy="80" r="60" stroke-dashoffset="-218"
+								transform="rotate(-90 80 80)" />
+							<circle class="donut-seg seg-amber" cx="80" cy="80" r="60" stroke-dashoffset="-301"
+								transform="rotate(-90 80 80)" />
+							<circle class="donut-seg seg-violet" cx="80" cy="80" r="60" stroke-dashoffset="-350"
+								transform="rotate(-90 80 80)" />
+						</svg>
+						<div class="donut-center"><span class="donut-pct">58%</span><span
+								class="donut-sub">Organic</span></div>
+					</div>
+					<ul class="traffic-list">
+						<li onclick="showToast('Organic: 6,598 visitors','info')"><span
+								class="tl-dot tl-emerald"></span>Organic Search<strong>6,598</strong></li>
+						<li onclick="showToast('Direct: 2,458 visitors','info')"><span
+								class="tl-dot tl-indigo"></span>Direct Traffic<strong>2,458</strong></li>
+						<li onclick="showToast('Referral: 1,456 visitors','info')"><span
+								class="tl-dot tl-amber"></span>Referral Traffic<strong>1,456</strong></li>
+						<li onclick="showToast('Social: 845 visitors','info')"><span
+								class="tl-dot tl-violet"></span>Social Media<strong>845</strong></li>
+					</ul>
+				</div>
+			</section>
 
-            <!-- Revenue Analytics -->
-            <div class="card card--revenue">
-                <div class="card-header">
-                    <h3 class="card-title"><span class="title-bar"></span>Revenue Analytics</h3>
-                    <div class="tab-group">
-                        <button class="tab active">Weekly</button>
-                        <button class="tab">Monthly</button>
-                        <button class="tab">Yearly</button>
-                    </div>
-                </div>
-                <div class="revenue-sub-header">
-                    <div>
-                        <span class="big-num">495K</span>
-                        <span class="big-num-label">Revenue with Sales (USD)</span>
-                    </div>
-                    <div class="legend-pills">
-                        <span class="pill pill--red"><span></span>Revenue</span>
-                        <span class="pill pill--outline"><span></span>Sales</span>
-                    </div>
-                </div>
-                <div class="bar-chart-container">
-                    <div class="y-labels">
-                        <span>$60k</span><span>$50k</span><span>$40k</span><span>$30k</span><span>$20k</span><span>$10k</span><span>$0k</span>
-                    </div>
-                    <div class="bar-chart" id="revenueChart"></div>
-                </div>
-                <div class="x-labels" id="xLabelsRevenue"></div>
-            </div>
+			<!-- MID ROW -->
+			<section class="mid-row">
+				<div class="card card--deals">
+					<div class="card-head">
+						<h3 class="card-title"><span class="title-accent"></span>Top Deals</h3><select class="select-sm"
+							onchange="showToast('Deals filter updated','success')">
+							<option>Last 30 Days</option>
+							<option>Last 7 Days</option>
+							<option>Last Year</option>
+						</select>
+					</div>
+					<ul class="deal-list">
+						<li class="deal-row" onclick="openDealModal('NovaWave LLC','$19,94,938','+12%','Germany')">
+							<div class="deal-logo dl-1"><i class="fas fa-paper-plane"></i></div>
+							<div class="deal-info">
+								<div class="deal-name">NovaWave LLC</div>
+								<div class="deal-loc"><i class="fas fa-location-dot"></i>Germany</div>
+							</div>
+							<div style="text-align:right">
+								<div class="deal-amount">$19,94,938</div><span class="deal-badge">+12%</span>
+							</div>
+						</li>
+						<li class="deal-row" onclick="openDealModal('Silver Hawk','$15,44,540','+8%','Australia')">
+							<div class="deal-logo dl-2"><i class="fas fa-recycle"></i></div>
+							<div class="deal-info">
+								<div class="deal-name">Silver Hawk</div>
+								<div class="deal-loc"><i class="fas fa-location-dot"></i>Australia</div>
+							</div>
+							<div style="text-align:right">
+								<div class="deal-amount">$15,44,540</div><span class="deal-badge">+8%</span>
+							</div>
+						</li>
+						<li class="deal-row" onclick="openDealModal('Summit LLC','$10,36,390','+5%','Italy')">
+							<div class="deal-logo dl-3"><i class="fas fa-fan"></i></div>
+							<div class="deal-info">
+								<div class="deal-name">Summit LLC</div>
+								<div class="deal-loc"><i class="fas fa-location-dot"></i>Italy</div>
+							</div>
+							<div style="text-align:right">
+								<div class="deal-amount">$10,36,390</div><span class="deal-badge">+5%</span>
+							</div>
+						</li>
+						<li class="deal-row" onclick="openDealModal('Bluesky Industries','$10,15,280','+3%','Canada')">
+							<div class="deal-logo dl-4"><i class="fas fa-sun"></i></div>
+							<div class="deal-info">
+								<div class="deal-name">Bluesky Industries</div>
+								<div class="deal-loc"><i class="fas fa-location-dot"></i>Canada</div>
+							</div>
+							<div style="text-align:right">
+								<div class="deal-amount">$10,15,280</div><span class="deal-badge">+3%</span>
+							</div>
+						</li>
+						<li class="deal-row" onclick="openDealModal('HealthTech Innovations','$10,14,112','+2%','UK')">
+							<div class="deal-logo dl-5"><i class="fas fa-heart-pulse"></i></div>
+							<div class="deal-info">
+								<div class="deal-name">HealthTech Innovations</div>
+								<div class="deal-loc"><i class="fas fa-location-dot"></i>UK</div>
+							</div>
+							<div style="text-align:right">
+								<div class="deal-amount">$10,14,112</div><span class="deal-badge">+2%</span>
+							</div>
+						</li>
+					</ul>
+					<div class="card-link" onclick="showToast('Loading all deals...','info')">View All Deals <i
+							class="fas fa-arrow-right"></i></div>
+				</div>
 
-            <!-- Traffic Sources -->
-            <div class="card card--traffic">
-                <div class="card-header">
-                    <h3 class="card-title"><span class="title-bar"></span>Traffic Sources</h3>
-                    <button class="icon-btn-sm"><i class="fas fa-arrow-right"></i></button>
-                </div>
-                <div class="donut-container">
-                    <svg viewBox="0 0 160 160" class="donut-svg">
-                        <circle class="donut-bg" cx="80" cy="80" r="60"/>
-                        <circle class="donut-seg seg-green"  cx="80" cy="80" r="60" stroke-dasharray="218.6 157.4" stroke-dashoffset="0"     transform="rotate(-90 80 80)"/>
-                        <circle class="donut-seg seg-blue"   cx="80" cy="80" r="60" stroke-dasharray="82.9 293.1"  stroke-dashoffset="-218.6" transform="rotate(-90 80 80)"/>
-                        <circle class="donut-seg seg-yellow" cx="80" cy="80" r="60" stroke-dasharray="48.9 327.1"  stroke-dashoffset="-301.5" transform="rotate(-90 80 80)"/>
-                        <circle class="donut-seg seg-purple" cx="80" cy="80" r="60" stroke-dasharray="26.4 349.6"  stroke-dashoffset="-350.4" transform="rotate(-90 80 80)"/>
-                        <text x="80" y="76" class="donut-center-pct">58%</text>
-                        <text x="80" y="92" class="donut-center-label">Organic</text>
-                    </svg>
-                </div>
-                <ul class="traffic-list">
-                    <li><span class="tl-dot tl-green"></span>Organic Search <strong>6598</strong></li>
-                    <li><span class="tl-dot tl-blue"></span>Direct Traffic <strong>2458</strong></li>
-                    <li><span class="tl-dot tl-yellow"></span>Referral Traffic <strong>1456</strong></li>
-                    <li><span class="tl-dot tl-purple"></span>Social Media <strong>845</strong></li>
-                </ul>
-            </div>
-        </section>
+				<div class="card card--pipeline">
+					<div class="card-head">
+						<h3 class="card-title"><span class="title-accent"></span>Pipeline</h3><select class="select-sm"
+							onchange="showToast('Pipeline view updated','success')">
+							<option>Weekly</option>
+							<option>Monthly</option>
+						</select>
+					</div>
+					<div class="pipeline-grid">
+						<div class="pipe-item" onclick="showToast('Lead pipeline: 80 deals','info')">
+							<div class="pipe-label">Lead</div>
+							<div class="pipe-val">$20,010</div>
+							<div class="pipe-deals">80 Deals</div>
+							<div class="pipe-bar pipe-indigo"></div>
+						</div>
+						<div class="pipe-item" onclick="showToast('Proposal pipeline: 23 deals','info')">
+							<div class="pipe-label">Proposal</div>
+							<div class="pipe-val">$17,210</div>
+							<div class="pipe-deals">23 Deals</div>
+							<div class="pipe-bar pipe-amber"></div>
+						</div>
+						<div class="pipe-item" onclick="showToast('Sales pipeline: 12 deals','info')">
+							<div class="pipe-label">Sales</div>
+							<div class="pipe-val">$9,210</div>
+							<div class="pipe-deals">12 Deals</div>
+							<div class="pipe-bar pipe-violet"></div>
+						</div>
+						<div class="pipe-item" onclick="showToast('Won pipeline: 21 deals','info')">
+							<div class="pipe-label">Won</div>
+							<div class="pipe-val">$8,210</div>
+							<div class="pipe-deals">21 Deals</div>
+							<div class="pipe-bar pipe-emerald"></div>
+						</div>
+					</div>
+					<div class="profit-hdr"><span>Profit Earned</span><strong>$85K</strong><select class="select-sm"
+							style="margin-left:auto" onchange="showToast('Year updated','success')">
+							<option>2025</option>
+							<option>2026</option>
+						</select></div>
+					<div class="profit-bars" id="profitBars"></div>
+				</div>
 
-        <!-- ---- ROW: TOP DEALS + PIPELINE + DEALS OVERVIEW ---- -->
-        <section class="mid-row">
+				<div class="card card--overview">
+					<div class="card-head">
+						<h3 class="card-title"><span class="title-accent"></span>Deals Overview</h3><button
+							class="icon-btn-sm" onclick="showToast('Overview report exported','success')"><i
+								class="fas fa-arrow-right"></i></button>
+					</div>
+					<div class="ov-bar">
+						<div class="ov-seg ov-emerald" style="--w:37.6%"></div>
+						<div class="ov-seg ov-amber" style="--w:39.7%"></div>
+						<div class="ov-seg ov-violet" style="--w:18.8%"></div>
+						<div class="ov-seg ov-rose" style="--w:3.9%"></div>
+					</div>
+					<div class="ov-total"><span class="ov-num">2,656</span><span class="ov-badge">+12.5%</span><span
+							class="ov-sub">compared to last week</span></div>
+					<ul class="ov-list">
+						<li onclick="showToast('Successful deals: 1,000','success')"><span
+								class="ov-dot ov-d-emerald"></span>Successful Deals<strong>1,000 Deals</strong></li>
+						<li onclick="showToast('Pending deals: 1,056','warning')"><span
+								class="ov-dot ov-d-amber"></span>Pending Deals<strong>1,056 Deals</strong></li>
+						<li onclick="showToast('Rejected deals: 500','info')"><span
+								class="ov-dot ov-d-violet"></span>Rejected Deals<strong>500 Deals</strong></li>
+						<li onclick="showToast('Upcoming deals: 100','info')"><span
+								class="ov-dot ov-d-rose"></span>Upcoming Deals<strong>100 Deals</strong></li>
+					</ul>
+					<div class="won-box">
+						<div>
+							<div class="won-label">Deals Won</div>
+							<div class="won-val">689</div>
+						</div>
+						<div class="won-av-row">
+							<div class="av-item av-a"></div>
+							<div class="av-item av-b"></div>
+							<div class="av-item av-c"></div>
+							<div class="av-item av-d"></div>
+							<div class="av-item av-e"></div>
+						</div>
+					</div>
+				</div>
+			</section>
 
-            <!-- Top Deals -->
-            <div class="card card--top-deals">
-                <div class="card-header">
-                    <h3 class="card-title"><span class="title-bar"></span>Top Deals</h3>
-                    <select class="select-pill">
-                        <option>Last 30 Days</option>
-                        <option>Last 7 Days</option>
-                        <option>Last Year</option>
-                    </select>
-                </div>
-                <ul class="top-deals-list">
-                    <li class="deal-item">
-                        <div class="deal-logo dl-blue"><i class="fas fa-paper-plane"></i></div>
-                        <div class="deal-info"><strong>NovaWave LLC</strong><span>Germany</span></div>
-                        <div class="deal-val">$19,94,938</div>
-                    </li>
-                    <li class="deal-item">
-                        <div class="deal-logo dl-green"><i class="fas fa-recycle"></i></div>
-                        <div class="deal-info"><strong>Silver Hawk</strong><span>Australia</span></div>
-                        <div class="deal-val">$15,44,540</div>
-                    </li>
-                    <li class="deal-item">
-                        <div class="deal-logo dl-cyan"><i class="fas fa-fan"></i></div>
-                        <div class="deal-info"><strong>Summit LLC</strong><span>Italy</span></div>
-                        <div class="deal-val">$10,36,390</div>
-                    </li>
-                    <li class="deal-item">
-                        <div class="deal-logo dl-red"><i class="fas fa-sun"></i></div>
-                        <div class="deal-info"><strong>Bluesky Industries</strong><span>Canada</span></div>
-                        <div class="deal-val">$10,15,280</div>
-                    </li>
-                    <li class="deal-item">
-                        <div class="deal-logo dl-dark"><i class="fas fa-ban"></i></div>
-                        <div class="deal-info"><strong>HealthTech Innovations</strong><span>UK</span></div>
-                        <div class="deal-val">$10,14,112</div>
-                    </li>
-                </ul>
-                <div class="card-footer-link">View All <i class="fas fa-chevron-right"></i></div>
-            </div>
+			<!-- RECENT DEALS TABLE -->
+			<div class="card card--table">
+				<div class="table-head">
+					<h3 class="card-title"><span class="title-accent"></span>Recent Deals</h3><a href="#"
+						class="view-all" onclick="showToast('Loading all deals...','info');return false;">View All <i
+							class="fas fa-arrow-right"></i></a>
+				</div>
+				<div class="table-wrap">
+					<table class="data-table">
+						<thead>
+							<tr>
+								<th>Deal Name</th>
+								<th>Stage</th>
+								<th>Deal Value</th>
+								<th>Tag</th>
+								<th>Owner</th>
+								<th>Probability</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="row-in" style="animation-delay:.1s"
+								onclick="openDealModal('Annual Software','$19,94,938','+90%','USA')">
+								<td class="cell-name">Annual Software</td>
+								<td class="cell-stage">Appointment</td>
+								<td class="cell-val">$19,94,938</td>
+								<td><span class="tag tag-amber">Rated</span></td>
+								<td>
+									<div class="owner-cell">
+										<div class="owner-av ow-a"></div>Robert Johnson
+									</div>
+								</td>
+								<td>
+									<div class="prob-wrap">
+										<div class="prob-bar-bg">
+											<div class="prob-bar-fill" style="width:90%"></div>
+										</div><span class="prob-txt">90%</span>
+									</div>
+								</td>
+								<td><span class="status st-won">Won</span></td>
+							</tr>
+							<tr class="row-in" style="animation-delay:.18s"
+								onclick="openDealModal('CRM Onboarding','$15,44,540','+90%','USA')">
+								<td class="cell-name">CRM Onboarding</td>
+								<td class="cell-stage">Appointment</td>
+								<td class="cell-val">$15,44,540</td>
+								<td><span class="tag tag-indigo">Collab</span></td>
+								<td>
+									<div class="owner-cell">
+										<div class="owner-av ow-b"></div>Isabella Cooper
+									</div>
+								</td>
+								<td>
+									<div class="prob-wrap">
+										<div class="prob-bar-bg">
+											<div class="prob-bar-fill" style="width:90%"></div>
+										</div><span class="prob-txt">90%</span>
+									</div>
+								</td>
+								<td><span class="status st-lost">Lost</span></td>
+							</tr>
+							<tr class="row-in" style="animation-delay:.26s"
+								onclick="openDealModal('Enterprise Plan','$10,36,390','+80%','Italy')">
+								<td class="cell-name">Enterprise Plan</td>
+								<td class="cell-stage">Contact Made</td>
+								<td class="cell-val">$10,36,390</td>
+								<td><span class="tag tag-pink">Promotion</span></td>
+								<td>
+									<div class="owner-cell">
+										<div class="owner-av ow-c"></div>John Smith
+									</div>
+								</td>
+								<td>
+									<div class="prob-wrap">
+										<div class="prob-bar-bg">
+											<div class="prob-bar-fill" style="width:80%"></div>
+										</div><span class="prob-txt">80%</span>
+									</div>
+								</td>
+								<td><span class="status st-won">Won</span></td>
+							</tr>
+							<tr class="row-in" style="animation-delay:.34s"
+								onclick="openDealModal('BrightWorks','$16,11,420','+72%','Canada')">
+								<td class="cell-name">BrightWorks</td>
+								<td class="cell-stage">Presentation</td>
+								<td class="cell-val">$16,11,420</td>
+								<td><span class="tag tag-amber">Rated</span></td>
+								<td>
+									<div class="owner-cell">
+										<div class="owner-av ow-d"></div>Sophia Parker
+									</div>
+								</td>
+								<td>
+									<div class="prob-wrap">
+										<div class="prob-bar-bg">
+											<div class="prob-bar-fill" style="width:72%"></div>
+										</div><span class="prob-txt">72%</span>
+									</div>
+								</td>
+								<td><span class="status st-won">Won</span></td>
+							</tr>
+							<tr class="row-in" style="animation-delay:.42s"
+								onclick="openDealModal('Sales Pipeline','$90,59,472','+60%','UK')">
+								<td class="cell-name">Sales Pipeline</td>
+								<td class="cell-stage">Proposal Made</td>
+								<td class="cell-val">$90,59,472</td>
+								<td><span class="tag tag-rose">Rejected</span></td>
+								<td>
+									<div class="owner-cell">
+										<div class="owner-av ow-e"></div>Emma Reynolds
+									</div>
+								</td>
+								<td>
+									<div class="prob-wrap">
+										<div class="prob-bar-bg">
+											<div class="prob-bar-fill" style="width:60%"></div>
+										</div><span class="prob-txt">60%</span>
+									</div>
+								</td>
+								<td><span class="status st-open">Open</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 
-            <!-- Pipeline Statistics -->
-            <div class="card card--pipeline">
-                <div class="card-header">
-                    <h3 class="card-title"><span class="title-bar"></span>Pipeline Statistics</h3>
-                    <select class="select-pill"><option>Weekly</option><option>Monthly</option></select>
-                </div>
-                <div class="pipeline-stats">
-                    <div class="ps-item">
-                        <p class="ps-label">Lead</p>
-                        <p class="ps-val">$20010</p>
-                        <p class="ps-deals">80 Deals</p>
-                        <div class="ps-bar ps-bar--red"></div>
-                    </div>
-                    <div class="ps-item">
-                        <p class="ps-label">Proposal</p>
-                        <p class="ps-val">$17210</p>
-                        <p class="ps-deals">23 Deals</p>
-                        <div class="ps-bar ps-bar--yellow"></div>
-                    </div>
-                    <div class="ps-item">
-                        <p class="ps-label">Sales</p>
-                        <p class="ps-val">$9210</p>
-                        <p class="ps-deals">12 Deals</p>
-                        <div class="ps-bar ps-bar--purple"></div>
-                    </div>
-                    <div class="ps-item">
-                        <p class="ps-label">Won</p>
-                        <p class="ps-val">$8210</p>
-                        <p class="ps-deals">21 Deals</p>
-                        <div class="ps-bar ps-bar--green"></div>
-                    </div>
-                </div>
-                <div class="profit-section">
-                    <div class="profit-header">
-                        <span>Profit Earned <strong>$85K</strong></span>
-                        <select class="select-pill"><option>2025</option><option>2026</option></select>
-                    </div>
-                    <div class="profit-chart" id="profitChart"></div>
-                </div>
-            </div>
+			<footer class="dash-footer"><span>© 2026 <a href="#" style="color:var(--teal)">CRMS</a> — All rights
+					reserved</span>
+				<div class="footer-links"><a href="#">About</a><a href="#">Privacy</a><a href="#">Terms</a><a
+						href="#">Contact</a></div>
+			</footer>
+		</main>
+	</div>
 
-            <!-- Deals Overview -->
-            <div class="card card--deals-overview">
-                <div class="card-header">
-                    <h3 class="card-title"><span class="title-bar"></span>Deals Overview</h3>
-                    <button class="icon-btn-sm"><i class="fas fa-arrow-right"></i></button>
-                </div>
-                <div class="deals-ov-bar">
-                    <div class="dob-seg dob-green"  style="--w:37.6%"></div>
-                    <div class="dob-seg dob-yellow" style="--w:39.7%"></div>
-                    <div class="dob-seg dob-purple" style="--w:18.8%"></div>
-                    <div class="dob-seg dob-red"    style="--w:3.9%"></div>
-                </div>
-                <div class="dov-total">
-                    <span class="dov-num">2656</span>
-                    <span class="dov-badge">+12.5%</span>
-                    <span class="dov-label">compared to last week</span>
-                </div>
-                <ul class="dov-list">
-                    <li><span class="dot-circle dot-green"></span>Successful Deals <strong>1000 Deals</strong></li>
-                    <li><span class="dot-circle dot-yellow"></span>Pending Deals <strong>1056 Deals</strong></li>
-                    <li><span class="dot-circle dot-purple"></span>Rejected Deals <strong>500 Deals</strong></li>
-                    <li><span class="dot-circle dot-red"></span>Upcoming Deals <strong>100 Deals</strong></li>
-                </ul>
-                <div class="deals-won-box">
-                    <div>
-                        <p class="dwb-label">Deals Won</p>
-                        <p class="dwb-val">689</p>
-                    </div>
-                    <div class="av-stack-sm">
-                        <div class="av av1"></div><div class="av av2"></div>
-                        <div class="av av3"></div><div class="av av4"></div><div class="av av5"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+	<button class="fab" title="Settings" onclick="openSettingsModal()"><i class="fas fa-gear"></i></button>
+	<div class="toast-container" id="toastContainer"></div>
 
-        <!-- ---- RECENT DEALS TABLE ---- -->
-        <section class="card card--table">
-            <div class="card-header">
-                <h3 class="card-title"><span class="title-bar"></span>Recent Deals</h3>
-                <a href="#" class="view-all-link">View All <i class="fas fa-chevron-right"></i></a>
-            </div>
-            <div class="table-wrap">
-                <table class="deals-table">
-                    <thead>
-                        <tr>
-                            <th>Deal Name</th>
-                            <th>Stage</th>
-                            <th>Deal Value</th>
-                            <th>Tags</th>
-                            <th>Owner</th>
-                            <th>Probability</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Annual Software</strong></td>
-                            <td>Appointment</td>
-                            <td>$19,94,938</td>
-                            <td><span class="tag tag--yellow">Rated</span></td>
-                            <td><div class="owner-cell"><div class="ow-av ow1"></div> Robert Johnson</div></td>
-                            <td>90%</td>
-                            <td><span class="status status--won">Won</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>CRM Onboarding</strong></td>
-                            <td>Appointment</td>
-                            <td>$15,44,540</td>
-                            <td><span class="tag tag--blue">Collab</span></td>
-                            <td><div class="owner-cell"><div class="ow-av ow2"></div> Isabella Cooper</div></td>
-                            <td>90%</td>
-                            <td><span class="status status--lost">Lost</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Enterprise Plan</strong></td>
-                            <td>Contact Made</td>
-                            <td>$10,36,390</td>
-                            <td><span class="tag tag--pink">Promotion</span></td>
-                            <td><div class="owner-cell"><div class="ow-av ow3"></div> John Smith</div></td>
-                            <td>80%</td>
-                            <td><span class="status status--won">Won</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>BrightWorks</strong></td>
-                            <td>Presentation</td>
-                            <td>$16,11,420</td>
-                            <td><span class="tag tag--yellow">Rated</span></td>
-                            <td><div class="owner-cell"><div class="ow-av ow4"></div> Sophia Parker</div></td>
-                            <td>72%</td>
-                            <td><span class="status status--won">Won</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Sales Pipeline</strong></td>
-                            <td>Proposal Made</td>
-                            <td>$90,59,472</td>
-                            <td><span class="tag tag--red">Rejected</span></td>
-                            <td><div class="owner-cell"><div class="ow-av ow5"></div> Emma Reynolds</div></td>
-                            <td>60%</td>
-                            <td><span class="status status--open">Open</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+	<!-- MODALS (deal, settings, profile, logout, add member, date) -->
+	<div class="modal-overlay hidden" id="dealModal">
+		<div class="modal">
+			<div class="modal-head">
+				<h3 id="dealModalTitle">Deal Details</h3><button class="modal-close"
+					onclick="closeModal('dealModal')"><i class="fas fa-times"></i></button>
+			</div>
+			<div class="modal-body">
+				<div class="form-grid" style="margin-bottom:.85rem">
+					<div>
+						<div class="form-label">Company</div>
+						<div style="font-size:.85rem;font-weight:700;color:var(--text)" id="dealCompany">—</div>
+					</div>
+					<div>
+						<div class="form-label">Deal Value</div>
+						<div style="font-size:.85rem;font-weight:700;color:var(--teal)" id="dealValue">—</div>
+					</div>
+				</div>
+				<div class="form-grid" style="margin-bottom:.85rem">
+					<div>
+						<div class="form-label">Growth</div>
+						<div style="font-size:.85rem;font-weight:700;color:var(--teal-green)" id="dealGrowth">—</div>
+					</div>
+					<div>
+						<div class="form-label">Region</div>
+						<div style="font-size:.85rem;font-weight:700;color:var(--text)" id="dealRegion">—</div>
+					</div>
+				</div>
+				<div class="form-row"><label class="form-label">Add Note</label><input type="text" class="form-input"
+						placeholder="Enter a note about this deal…"></div>
+			</div>
+			<div class="modal-footer"><button class="btn btn-ghost"
+					onclick="closeModal('dealModal')">Close</button><button class="btn btn-primary"
+					onclick="closeModal('dealModal');showToast('Note saved successfully','success')">Save Note</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-overlay hidden" id="settingsModal">
+		<div class="modal">
+			<div class="modal-head">
+				<h3>Settings</h3><button class="modal-close" onclick="closeModal('settingsModal')"><i
+						class="fas fa-times"></i></button>
+			</div>
+			<div class="modal-body">
+				<div class="form-row"><label class="form-label">Display Name</label><input type="text"
+						class="form-input" value="Admin User"></div>
+				<div class="form-row"><label class="form-label">Email Address</label><input type="email"
+						class="form-input" value="admin@crms.io"></div>
+				<div class="form-row"><label class="form-label">Timezone</label><select class="form-input">
+						<option>UTC +5:30 (IST)</option>
+						<option>UTC +0:00 (GMT)</option>
+						<option>UTC -5:00 (EST)</option>
+						<option>UTC +9:00 (JST)</option>
+					</select></div>
+				<div class="form-grid">
+					<div class="form-row"><label class="form-label">Language</label><select class="form-input">
+							<option>English</option>
+							<option>Hindi</option>
+							<option>Spanish</option>
+						</select></div>
+					<div class="form-row"><label class="form-label">Currency</label><select class="form-input">
+							<option>USD ($)</option>
+							<option>INR (₹)</option>
+							<option>EUR (€)</option>
+						</select></div>
+				</div>
+			</div>
+			<div class="modal-footer"><button class="btn btn-ghost"
+					onclick="closeModal('settingsModal')">Cancel</button><button class="btn btn-primary"
+					onclick="closeModal('settingsModal');showToast('Settings saved!','success')">Save Changes</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-overlay hidden" id="profileModal">
+		<div class="modal">
+			<div class="modal-head">
+				<h3>My Profile</h3><button class="modal-close" onclick="closeModal('profileModal')"><i
+						class="fas fa-times"></i></button>
+			</div>
+			<div class="modal-body">
+				<div
+					style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;padding:1rem;background:var(--bg);border-radius:var(--r-sm)">
+					<div
+						style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal-blue));flex-shrink:0">
+					</div>
+					<div>
+						<div style="font-size:.95rem;font-weight:700;color:var(--text)">Admin User</div>
+						<div style="font-size:.75rem;color:var(--muted)">Super Administrator</div>
+						<div style="font-size:.72rem;color:var(--teal);margin-top:2px">admin@crms.io</div>
+					</div>
+				</div>
+				<div class="form-row"><label class="form-label">Full Name</label><input type="text" class="form-input"
+						value="Admin User"></div>
+				<div class="form-row"><label class="form-label">Phone</label><input type="text" class="form-input"
+						placeholder="+91 00000 00000"></div>
+				<div class="form-row"><label class="form-label">New Password</label><input type="password"
+						class="form-input" placeholder="Leave blank to keep current"></div>
+			</div>
+			<div class="modal-footer"><button class="btn btn-ghost"
+					onclick="closeModal('profileModal')">Cancel</button><button class="btn btn-primary"
+					onclick="closeModal('profileModal');showToast('Profile updated!','success')">Update Profile</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-overlay hidden" id="logoutModal">
+		<div class="modal" style="width:360px">
+			<div class="modal-head">
+				<h3>Confirm Logout</h3><button class="modal-close" onclick="closeModal('logoutModal')"><i
+						class="fas fa-times"></i></button>
+			</div>
+			<div class="modal-body">
+				<p style="font-size:.82rem;color:var(--text-2);line-height:1.6">Are you sure you want to logout? Your
+					session will be ended and you'll be redirected to the login page.</p>
+			</div>
+			<div class="modal-footer"><button class="btn btn-ghost"
+					onclick="closeModal('logoutModal')">Cancel</button><button class="btn btn-danger"
+					onclick="closeModal('logoutModal');showToast('Logged out successfully','success')">Logout</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-overlay hidden" id="addMemberModal">
+		<div class="modal">
+			<div class="modal-head">
+				<h3>Add Team Member</h3><button class="modal-close" onclick="closeModal('addMemberModal')"><i
+						class="fas fa-times"></i></button>
+			</div>
+			<div class="modal-body">
+				<div class="form-row"><label class="form-label">Name</label><input type="text" class="form-input"
+						placeholder="Enter member's name"></div>
+				<div class="form-row"><label class="form-label">Email</label><input type="email" class="form-input"
+						placeholder="Enter email address"></div>
+				<div class="form-row"><label class="form-label">Role</label><select class="form-input">
+						<option>Sales Executive</option>
+						<option>Team Lead</option>
+						<option>Manager</option>
+						<option>Admin</option>
+					</select></div>
+			</div>
+			<div class="modal-footer"><button class="btn btn-ghost"
+					onclick="closeModal('addMemberModal')">Cancel</button><button class="btn btn-primary"
+					onclick="closeModal('addMemberModal');showToast('Member invited successfully!','success')">Send
+					Invite</button></div>
+		</div>
+	</div>
+	<div class="modal-overlay hidden" id="dateModal">
+		<div class="modal" style="width:380px">
+			<div class="modal-head">
+				<h3>Select Date Range</h3><button class="modal-close" onclick="closeModal('dateModal')"><i
+						class="fas fa-times"></i></button>
+			</div>
+			<div class="modal-body">
+				<div class="form-grid">
+					<div class="form-row"><label class="form-label">Start Date</label><input type="date"
+							class="form-input" value="2026-03-19"></div>
+					<div class="form-row"><label class="form-label">End Date</label><input type="date"
+							class="form-input" value="2026-04-17"></div>
+				</div>
+				<div class="form-row"><label class="form-label">Quick Select</label>
+					<div style="display:flex;flex-wrap:wrap;gap:.42rem"><button class="btn btn-ghost"
+							style="padding:.35rem .75rem;font-size:.72rem" onclick="setDateRange('Last 7 Days')">Last 7
+							Days</button><button class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.72rem"
+							onclick="setDateRange('Last 30 Days')">Last 30 Days</button><button class="btn btn-ghost"
+							style="padding:.35rem .75rem;font-size:.72rem" onclick="setDateRange('This Month')">This
+							Month</button><button class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.72rem"
+							onclick="setDateRange('This Quarter')">This Quarter</button></div>
+				</div>
+			</div>
+			<div class="modal-footer"><button class="btn btn-ghost"
+					onclick="closeModal('dateModal')">Cancel</button><button class="btn btn-primary"
+					onclick="closeModal('dateModal');showToast('Date range applied','success')">Apply</button></div>
+		</div>
+	</div>
 
-        <!-- Footer -->
-        <footer class="dash-footer">
-            <span>Copyright © 2026 <a href="#">CRMS</a></span>
-            <div class="footer-links">
-                <a href="#">About</a><a href="#">Terms</a><a href="#">Contact Us</a>
-            </div>
-        </footer>
-
-    </main>
-</div>
-
-<!-- Settings FAB -->
-<button class="settings-fab"><i class="fas fa-cog"></i></button>
-
-<script>
-// ---- Revenue Bar Chart ----
-const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const revenues = [35,20,50,50,35,10,50,38,30,28,0,0];
-const sales    = [25,15,30,20,22, 8,38,28,22,20,0,0];
-const chart = document.getElementById('revenueChart');
-const xLab  = document.getElementById('xLabelsRevenue');
-
-months.forEach((m, i) => {
-    const col = document.createElement('div');
-    col.className = 'rev-col';
-    const rH = (revenues[i] / 60) * 100;
-    const sH = (sales[i]    / 60) * 100;
-    col.innerHTML = `
-        <div class="rev-bar-wrap">
-            <div class="rev-bar rev-bar--red"   style="--h:${rH}%"></div>
-            <div class="rev-bar rev-bar--light" style="--h:${sH}%"></div>
-        </div>`;
-    chart.appendChild(col);
-    const lbl = document.createElement('span');
-    lbl.textContent = m;
-    xLab.appendChild(lbl);
-});
-
-setTimeout(() => {
-    document.querySelectorAll('.rev-bar').forEach((b, i) => {
-        setTimeout(() => b.classList.add('animated'), i * 40);
-    });
-    document.querySelectorAll('.kpi-mini-bars span').forEach((b, i) => {
-        setTimeout(() => b.classList.add('animated'), i * 80 + 300);
-    });
-}, 400);
-
-// ---- Profit Chart ----
-const profitData = [2,4,3,7,4,6,5,9,7,12,10,15];
-const profitChart = document.getElementById('profitChart');
-profitData.forEach(v => {
-    const col = document.createElement('div');
-    col.className = 'profit-col';
-    col.innerHTML = `
-        <div class="profit-bar-bg"></div>
-        <div class="profit-bar-red" style="--ph:${(v/15)*100}%"></div>`;
-    profitChart.appendChild(col);
-});
-setTimeout(() => {
-    document.querySelectorAll('.profit-bar-red').forEach((b, i) => {
-        setTimeout(() => b.classList.add('animated'), i * 50 + 500);
-    });
-}, 300);
-
-// ---- Sidebar Toggle ----
-document.getElementById('sidebarToggle').addEventListener('click', function() {
-    document.getElementById('sidebar').classList.toggle('collapsed');
-    document.querySelector('.layout').classList.toggle('sidebar-collapsed');
-    const icon = this.querySelector('i');
-    icon.classList.toggle('fa-chevron-left');
-    icon.classList.toggle('fa-chevron-right');
-});
-
-// ---- Nav submenu toggle ----
-document.querySelectorAll('.nav-item.has-submenu .nav-item-row').forEach(row => {
-    row.addEventListener('click', () => {
-        row.closest('.nav-item').classList.toggle('open');
-    });
-});
-
-// ---- Tab switching ----
-document.querySelectorAll('.tab-group .tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        tab.closest('.tab-group').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-    });
-});
-
-// ---- Donut animation ----
-setTimeout(() => {
-    document.querySelectorAll('.donut-seg').forEach(s => s.classList.add('animated'));
-}, 600);
-
-// ---- Pipeline bars & deal overview bars ----
-setTimeout(() => {
-    document.querySelectorAll('.dob-seg').forEach(s => s.classList.add('animated'));
-}, 700);
-
-// ---- Table row stagger ----
-document.querySelectorAll('.deals-table tbody tr').forEach((tr, i) => {
-    tr.style.animationDelay = (i * 0.08) + 's';
-    tr.classList.add('row-animate');
-});
-</script>
 </body>
+
+
 </html>
