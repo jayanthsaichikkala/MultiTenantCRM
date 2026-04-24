@@ -107,9 +107,88 @@ function closeAllDropdowns() {
 		.forEach(d => d.classList.remove('open'));
 }
 
-/* ═══════════ EVENTS */
+/* ═══════════ MODAL HELPERS ═══════════ */
+function openModal(id) {
+	document.getElementById(id).classList.remove('hidden');
+}
+
+function closeModal(id) {
+	document.getElementById(id).classList.add('hidden');
+}
+
+/* ═══════════ LOGOUT ═══════════ */
+function confirmLogout() {
+	closeAllDropdowns();
+	openModal('logoutModal');
+}
+
+/*
+ * doLogout() — called by the red Logout button inside the confirm modal.
+ * 1. Closes the modal
+ * 2. Shows the success toast
+ * 3. Redirects to the login page after 1.2 s so the toast is visible
+ *
+ * ⚠️  Change '/login' below to match your actual Spring Boot login URL.
+ */
+function doLogout() {
+	closeModal('logoutModal');
+	showToast('Logged out successfully', 'success');
+	setTimeout(() => {
+		window.location.href = '/login';   /* ← your login page URL */
+	}, 1200);
+}
+
+/* ═══════════ SETTINGS / PROFILE / DATE / MEMBER MODALS ═══════════ */
+function openSettingsModal() {
+	closeAllDropdowns();
+	openModal('settingsModal');
+}
+
+function openProfileModal() {
+	closeAllDropdowns();
+	openModal('profileModal');
+}
+
+function openDateModal() {
+	openModal('dateModal');
+}
+
+function openAddMemberModal() {
+	openModal('addMemberModal');
+}
+
+/* ═══════════ DEAL MODAL ═══════════ */
+function openDealModal(company, value, growth, region) {
+	document.getElementById('dealCompany').textContent = company;
+	document.getElementById('dealValue').textContent = value;
+	document.getElementById('dealGrowth').textContent = growth;
+	document.getElementById('dealRegion').textContent = region;
+	document.getElementById('dealModalTitle').textContent = company + ' — Deal Details';
+	openModal('dealModal');
+}
+
+/* ═══════════ DATE RANGE QUICK SELECT ═══════════ */
+function setDateRange(label) {
+	document.getElementById('dateRange').textContent = label;
+	showToast('Date range set to: ' + label, 'success');
+}
+
+/* ═══════════ DOWNLOAD / REFRESH ═══════════ */
+function downloadReport() {
+	showToast('Report download started…', 'info');
+}
+
+function refreshDashboard() {
+	const icon = document.getElementById('refreshIcon');
+	icon.style.animation = 'spinSlow 0.7s linear';
+	showToast('Dashboard refreshed!', 'success');
+	setTimeout(() => { icon.style.animation = ''; }, 750);
+}
+
+/* ═══════════ DOM READY ═══════════ */
 document.addEventListener('DOMContentLoaded', () => {
 
+	/* ── Notification / Message / Apps / User dropdowns ── */
 	document.getElementById('notifBtn').onclick = e => {
 		e.stopPropagation();
 		toggleDropdown(e.target, document.getElementById('notifDropdown'));
@@ -130,16 +209,107 @@ document.addEventListener('DOMContentLoaded', () => {
 		toggleDropdown(e.target, document.getElementById('userDropdown'));
 	};
 
+	/*
+	 * Wire the red "Logout" button inside #logoutModal to doLogout().
+	 * We use addEventListener here and strip the inline onclick from HTML
+	 * so there is only ONE handler and no double-fire.
+	 */
+	const logoutConfirmBtn = document.querySelector('#logoutModal .btn-danger');
+	if (logoutConfirmBtn) {
+		logoutConfirmBtn.removeAttribute('onclick');
+		logoutConfirmBtn.addEventListener('click', doLogout);
+	}
+
+	/* ── Mark all notifications read ── */
+	document.getElementById('markAllRead').addEventListener('click', function () {
+		document.querySelectorAll('.notif-item.unread').forEach(item => item.classList.remove('unread'));
+		const badge = document.getElementById('notifBadge');
+		if (badge) badge.style.display = 'none';
+		showToast('All notifications marked as read', 'success');
+	});
+
+	/* ── Topbar logout button (user dropdown) ── */
+	document.getElementById('logoutBtn').addEventListener('click', function (e) {
+		e.stopPropagation();
+		confirmLogout();
+	});
+
+	/* ── Fullscreen toggle ── */
+	document.getElementById('fullscreenBtn').addEventListener('click', function () {
+		const icon = document.getElementById('fullscreenIcon');
+		if (!document.fullscreenElement) {
+			document.documentElement.requestFullscreen().catch(() => {});
+			icon.classList.replace('fa-expand', 'fa-compress');
+		} else {
+			document.exitFullscreen().catch(() => {});
+			icon.classList.replace('fa-compress', 'fa-expand');
+		}
+	});
+
+	/* ── Dark mode toggle ── */
+	document.getElementById('darkModeBtn').addEventListener('click', function () {
+		document.body.classList.toggle('dark-mode');
+		const icon = this.querySelector('i');
+		icon.classList.toggle('fa-moon');
+		icon.classList.toggle('fa-sun');
+		showToast(document.body.classList.contains('dark-mode') ? 'Dark mode on' : 'Dark mode off', 'info');
+	});
+
+	/* ── Search box focus / shortcut ── */
+	const searchInput = document.getElementById('searchInput');
+	const searchDropdown = document.getElementById('searchDropdown');
+
+	searchInput.addEventListener('focus', () => searchDropdown.classList.add('open'));
+	searchInput.addEventListener('blur', () => setTimeout(() => searchDropdown.classList.remove('open'), 180));
+
+	document.addEventListener('keydown', e => {
+		if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+			e.preventDefault();
+			searchInput.focus();
+		}
+		if (e.key === 'Escape') {
+			closeAllDropdowns();
+			document.querySelectorAll('.modal-overlay').forEach(m => m.classList.add('hidden'));
+		}
+	});
+
+	/* ── Close modals on overlay click ── */
+	document.querySelectorAll('.modal-overlay').forEach(overlay => {
+		overlay.addEventListener('click', function (e) {
+			if (e.target === this) {
+				this.classList.add('hidden');
+			}
+		});
+	});
+
+	/* ── Close dropdowns on outside click ── */
 	document.addEventListener('click', closeAllDropdowns);
 
-	/* INIT */
+	/* ── Sparkline animation ── */
+	setTimeout(() => {
+		document.querySelectorAll('.sp-bar').forEach((bar, i) => {
+			setTimeout(() => bar.classList.add('lit'), i * 80);
+		});
+	}, 600);
+
+	/* ── Overview segments animate in ── */
+	setTimeout(() => {
+		document.querySelectorAll('.ov-seg').forEach(seg => seg.classList.add('go'));
+	}, 400);
+
+	/* ── Donut chart animate in ── */
+	setTimeout(() => {
+		document.querySelectorAll('.donut-seg').forEach(seg => seg.classList.add('go'));
+	}, 500);
+
+	/* ── INIT charts ── */
 	buildRevChart('weekly');
 	buildProfitChart();
 
 	setTimeout(() => showToast('Welcome back, Admin! Dashboard loaded.', 'success'), 1000);
 });
 
-/* ═══════════ TOAST */
+/* ═══════════ TOAST ═══════════ */
 function showToast(msg, type = 'info') {
 	const icons = { success:'fa-circle-check', info:'fa-circle-info', warning:'fa-triangle-exclamation' };
 
