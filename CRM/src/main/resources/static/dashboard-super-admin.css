@@ -1,7 +1,8 @@
 /* ============================================================
-   CRMS SUPER ADMIN — "Warm Dusk" Theme
+   CRMS SUPER ADMIN — "Warm Gold" Theme
    Full Desktop + Mobile-First Responsive CSS
-   Palette: Deep Purple · Burnt Orange · Peach · Blue-Grey · Beige · White
+   Palette: Deep Warm Brown · Gold · Warm Tan · Steel Blue-Grey · Neutral Grey
+   Hex Keys: #8e8e90 · #bd8c2d · #d1bfa7 · #bccbde · #c2b490
    Fonts: DM Sans (body) + Outfit (headings)
    ============================================================ */
 
@@ -11,41 +12,41 @@
    CSS CUSTOM PROPERTIES
    ────────────────────────────────────────── */
 :root {
-	/* ── Core Brand ── */
-	--purple: #2D053C;
-	--purple-l: #4A1060;
-	--purple-ll: #6B2080;
-	--purple-d: #1A0225;
-	--purple-dd: #0D0115;
+	/* ── Core Brand (deep warm brown, derived from #bd8c2d) ── */
+	--purple: #3d2c08;
+	--purple-l: #5c4412;
+	--purple-ll: #7d5e1c;
+	--purple-d: #221806;
+	--purple-dd: #110c03;
 
-	/* ── Orange (Primary Accent / CTA) ── */
-	--orange: #F7882F;
-	--orange-l: #F9A055;
-	--orange-ll: #FBB87A;
-	--orange-d: #D4691A;
-	--orange-dd: #A84E0D;
+	/* ── Gold (Primary Accent / CTA) — #bd8c2d ── */
+	--orange: #bd8c2d;
+	--orange-l: #cb9e3e;
+	--orange-ll: #d8b055;
+	--orange-d: #9e7020;
+	--orange-dd: #7e5518;
 
-	/* ── Peach (Secondary Accent) ── */
-	--peach: #ED8A63;
-	--peach-l: #F2A382;
-	--peach-ll: #F6BBA2;
-	--peach-d: #C8634A;
-	--peach-dd: #A04535;
+	/* ── Warm Tan (Secondary Accent) — #c2b490 ── */
+	--peach: #c2b490;
+	--peach-l: #d0c4a5;
+	--peach-ll: #ddd4bb;
+	--peach-d: #a09060;
+	--peach-dd: #7e6e44;
 
-	/* ── Blue-Grey (Neutral) ── */
-	--bluegrey: #6B7B8D;
-	--bluegrey-l: #8A9BAD;
-	--bluegrey-ll: #AABBCA;
-	--bluegrey-d: #4E5D6C;
-	--bluegrey-dd: #343E48;
+	/* ── Steel Blue-Grey (Neutral) — #8e8e90 / #bccbde ── */
+	--bluegrey: #8e8e90;
+	--bluegrey-l: #bccbde;
+	--bluegrey-ll: #d0dce8;
+	--bluegrey-d: #6c6c6e;
+	--bluegrey-dd: #484849;
 
 	/* ── Semantic shorthand ── */
-	--amber: #F7882F;
-	--amber-l: #F9A055;
-	--rose: #C0373F;
-	--rose-l: #D94950;
-	--violet: #2D053C;
-	--violet-l: #4A1060;
+	--amber: #bd8c2d;
+	--amber-l: #cb9e3e;
+	--rose: #8e4a2a;
+	--rose-l: #a85835;
+	--violet: #3d2c08;
+	--violet-l: #5c4412;
 
 	/* Legacy alias (keeps existing selectors working) */
 	--teal: var(--purple);
@@ -63,33 +64,33 @@
 	--teal-green-d: var(--peach-d);
 	--cyan: var(--bluegrey);
 	--cyan-l: var(--bluegrey-l);
-	--mint: #F6BBA2;
-	--aqua: #AABBCA;
+	--mint: #ddd4bb;
+	--aqua: #d0dce8;
 
-	/* ── Backgrounds (warm beige) ── */
-	--bg: #FAF7F2;
-	--bg-2: #F3EDE3;
-	--bg-3: #EDE4D6;
+	/* ── Backgrounds — built around #d1bfa7 warmth ── */
+	--bg: #f8f4ef;
+	--bg-2: #ede5d8;
+	--bg-3: #e3d8c8;
 
 	/* ── Surfaces ── */
 	--surface: #FFFFFF;
-	--surface-2: #FDFAF6;
-	--surface-3: #F8F3EC;
+	--surface-2: #faf7f2;
+	--surface-3: #f3ece2;
 
 	/* ── Text ── */
-	--text: #1C0F2A;
-	--text-2: #3A2250;
-	--muted: #6B7B8D;
-	--muted-2: #9BAABB;
+	--text: #1e1608;
+	--text-2: #3a2e18;
+	--muted: #8e8e90;
+	--muted-2: #bccbde;
 
-	/* ── Borders ── */
-	--border: #E5DDD0;
-	--border-2: #D4C8B8;
-	--border-focus: rgba(45, 5, 60, 0.30);
+	/* ── Borders — #d1bfa7 / #c2b490 ── */
+	--border: #d1bfa7;
+	--border-2: #c2b490;
+	--border-focus: rgba(189, 140, 45, 0.30);
 
-	/* ── Sidebar / active ── */
+	/* ── Sidebar ── */
 	--sidebar-bg: #FFFFFF;
-	--sidebar-act: #FFF0E6;
+	--sidebar-act: #f7f0e2;
 
 	/* ── Semantic tokens ── */
 	--primary: var(--purple);
@@ -102,14 +103,14 @@
 	--tertiary-l: var(--peach-l);
 
 	/* ── Glows ── */
-	--glow-purple: rgba(45, 5, 60, 0.18);
-	--glow-orange: rgba(247, 136, 47, 0.22);
-	--glow-peach: rgba(237, 138, 99, 0.18);
-	--glow-blue: rgba(107, 123, 141, 0.16);
+	--glow-purple: rgba(61, 44, 8, 0.18);
+	--glow-orange: rgba(189, 140, 45, 0.25);
+	--glow-peach: rgba(194, 180, 144, 0.20);
+	--glow-blue: rgba(188, 203, 222, 0.20);
 	--glow-teal: var(--glow-purple);
 	--glow-green: var(--glow-peach);
 	--glow-amber: var(--glow-orange);
-	--glow-rose: rgba(192, 55, 63, 0.14);
+	--glow-rose: rgba(142, 74, 42, 0.16);
 
 	/* ── Sizing ── */
 	--sidebar-w: 260px;
@@ -120,11 +121,11 @@
 	--r-xs: 6px;
 	--r-full: 9999px;
 
-	/* ── Shadows ── */
-	--shadow-xs: 0 1px 3px rgba(45, 5, 60, 0.07), 0 1px 2px rgba(45, 5, 60, 0.04);
-	--shadow-sm: 0 2px 8px rgba(45, 5, 60, 0.09), 0 1px 3px rgba(45, 5, 60, 0.04);
-	--shadow: 0 4px 20px rgba(45, 5, 60, 0.11), 0 1px 5px rgba(45, 5, 60, 0.05);
-	--shadow-md: 0 8px 38px rgba(45, 5, 60, 0.14), 0 2px 8px rgba(45, 5, 60, 0.06);
+	/* ── Shadows (warm brown undertone) ── */
+	--shadow-xs: 0 1px 3px rgba(61, 44, 8, 0.07), 0 1px 2px rgba(61, 44, 8, 0.04);
+	--shadow-sm: 0 2px 8px rgba(61, 44, 8, 0.09), 0 1px 3px rgba(61, 44, 8, 0.04);
+	--shadow: 0 4px 20px rgba(61, 44, 8, 0.11), 0 1px 5px rgba(61, 44, 8, 0.05);
+	--shadow-md: 0 8px 38px rgba(61, 44, 8, 0.14), 0 2px 8px rgba(61, 44, 8, 0.06);
 
 	/* ── Typography ── */
 	--font: 'DM Sans', sans-serif;
@@ -309,15 +310,15 @@ select {
 
 @keyframes tealPulse {
 	0% {
-		box-shadow: 0 0 0 0 rgba(247, 136, 47, .45)
+		box-shadow: 0 0 0 0 rgba(189, 140, 45, .45)
 	}
 
 	70% {
-		box-shadow: 0 0 0 8px rgba(247, 136, 47, 0)
+		box-shadow: 0 0 0 8px rgba(189, 140, 45, 0)
 	}
 
 	100% {
-		box-shadow: 0 0 0 0 rgba(247, 136, 47, 0)
+		box-shadow: 0 0 0 0 rgba(189, 140, 45, 0)
 	}
 }
 
@@ -348,7 +349,7 @@ select {
 	align-items: center;
 	padding: 0 1.5rem;
 	z-index: 300;
-	box-shadow: 0 2px 12px rgba(45, 5, 60, .07);
+	box-shadow: 0 2px 12px rgba(61, 44, 8, .07);
 	animation: fadeDown .4s var(--ease) both;
 }
 
@@ -446,7 +447,7 @@ select {
 .search-box:focus-within {
 	border-color: var(--orange);
 	background: var(--surface);
-	box-shadow: 0 0 0 3px rgba(247, 136, 47, .13)
+	box-shadow: 0 0 0 3px rgba(189, 140, 45, .13)
 }
 
 .search-box i {
@@ -667,7 +668,7 @@ select {
 }
 
 .notif-item.unread {
-	background: #FFF8F3
+	background: #faf4e8
 }
 
 .notif-item.unread::before {
@@ -692,19 +693,20 @@ select {
 	flex-shrink: 0
 }
 
+/* Notification icon variants — remapped to new palette */
 .ni-indigo {
-	background: #F3EAF7;
+	background: #f2ede0;
 	color: var(--purple)
 }
 
 .ni-emerald {
-	background: #FEF0E8;
+	background: #f7f0e2;
 	color: var(--orange)
 }
 
 .ni-amber {
-	background: #FDF0EB;
-	color: var(--peach)
+	background: #ede8dc;
+	color: var(--peach-d)
 }
 
 .notif-body {
@@ -1023,7 +1025,7 @@ select {
 }
 
 .user-drop-item.danger:hover {
-	background: #FDE9EB
+	background: #f5e8e2
 }
 
 /* Apps dropdown */
@@ -1116,7 +1118,7 @@ select {
 	flex-direction: column;
 	transition: width var(--trans-slow);
 	z-index: 200;
-	box-shadow: 1px 0 12px rgba(45, 5, 60, .05);
+	box-shadow: 1px 0 12px rgba(61, 44, 8, .05);
 	animation: fadeLeft .42s .1s var(--ease) both;
 }
 
@@ -1357,7 +1359,7 @@ select {
 }
 
 .logout-btn:hover {
-	background: #FDE9EB;
+	background: #f5e8e2;
 	color: var(--rose)
 }
 
@@ -1464,6 +1466,7 @@ select {
 	z-index: 2
 }
 
+/* Avatar gradients remapped to new palette */
 .av-a {
 	background: linear-gradient(135deg, var(--purple), var(--orange))
 }
@@ -1642,6 +1645,7 @@ select {
 	cursor: pointer;
 }
 
+/* KPI accent borders — mapped to new 4-color palette */
 .kpi-card:nth-child(1) {
 	animation-delay: .11s;
 	border-left: 3px solid var(--purple)
@@ -1734,13 +1738,13 @@ select {
 }
 
 .kpi-up {
-	background: #FEF0E8;
-	color: #A84E0D
+	background: #f5edd8;
+	color: #7e5518
 }
 
 .kpi-down {
-	background: #FDE9EB;
-	color: #A0182A
+	background: #f2e8e0;
+	color: #7e3818
 }
 
 .kpi-icon {
@@ -1760,23 +1764,24 @@ select {
 	transform: scale(1.08) rotate(-4deg)
 }
 
+/* KPI icon backgrounds — new palette */
 .kpi-icon-1 {
-	background: #F3EAF7;
+	background: #f0ead8;
 	color: var(--purple)
 }
 
 .kpi-icon-2 {
-	background: #FEF0E8;
+	background: #f7f0e2;
 	color: var(--orange)
 }
 
 .kpi-icon-3 {
-	background: #FDEEE8;
-	color: var(--peach)
+	background: #ede8dc;
+	color: var(--peach-d)
 }
 
 .kpi-icon-4 {
-	background: #EEF1F5;
+	background: #e8edf4;
 	color: var(--bluegrey)
 }
 
@@ -1993,7 +1998,7 @@ select {
 }
 
 .bar-secondary {
-	background: rgba(247, 136, 47, .20)
+	background: rgba(189, 140, 45, .20)
 }
 
 .x-axis {
@@ -2039,6 +2044,7 @@ select {
 	transition: stroke-dasharray .95s var(--ease)
 }
 
+/* Donut segments — new palette: tan · dark-brown · gold · steel-blue */
 .donut-seg.go.seg-emerald {
 	stroke: var(--peach);
 	stroke-dasharray: 218 159
@@ -2154,7 +2160,7 @@ select {
 	font-size: .7rem;
 	font-weight: 500;
 	appearance: none;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7B8D' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238e8e90' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
 	background-repeat: no-repeat;
 	background-position: right .48rem center;
 	transition: border-color var(--trans);
@@ -2225,6 +2231,7 @@ select {
 	flex-shrink: 0
 }
 
+/* Deal logo gradients — new palette */
 .dl-1 {
 	background: linear-gradient(135deg, var(--purple), var(--orange))
 }
@@ -2273,8 +2280,8 @@ select {
 	font-weight: 600;
 	padding: 2px 7px;
 	border-radius: var(--r-full);
-	background: #FEF0E8;
-	color: #A84E0D
+	background: #f5edd8;
+	color: #7e5518
 }
 
 .card-link {
@@ -2350,6 +2357,7 @@ select {
 	animation: growBar .85s .52s var(--ease) forwards
 }
 
+/* Pipeline bar gradients — new palette */
 .pipe-indigo {
 	background: linear-gradient(90deg, var(--purple), var(--orange))
 }
@@ -2440,6 +2448,7 @@ select {
 	width: var(--w)
 }
 
+/* Overview segments — new palette */
 .ov-emerald {
 	background: var(--peach);
 	transition-delay: .42s
@@ -2478,8 +2487,8 @@ select {
 .ov-badge {
 	font-size: .67rem;
 	font-weight: 600;
-	background: #FEF0E8;
-	color: #A84E0D;
+	background: #f5edd8;
+	color: #7e5518;
 	border-radius: var(--r-full);
 	padding: 2px 8px
 }
@@ -2544,7 +2553,7 @@ select {
 }
 
 .won-box {
-	background: linear-gradient(135deg, #FEF0E8, #FDEEE8);
+	background: linear-gradient(135deg, #f7f0e2, #ede8dc);
 	border: 1px solid var(--border);
 	border-radius: var(--r-sm);
 	padding: .78rem .92rem;
@@ -2697,6 +2706,7 @@ select {
 	flex-shrink: 0
 }
 
+/* Owner avatar gradients */
 .ow-a {
 	background: linear-gradient(135deg, var(--purple), var(--orange))
 }
@@ -2734,6 +2744,7 @@ select {
 	border-radius: 50%
 }
 
+/* Tags — remapped to new palette */
 .tag-amber::before {
 	background: var(--orange)
 }
@@ -2751,22 +2762,22 @@ select {
 }
 
 .tag-amber {
-	background: #FEF0E8;
-	color: #A84E0D
+	background: #f5edd8;
+	color: #7e5518
 }
 
 .tag-indigo {
-	background: #F3EAF7;
+	background: #f0ead8;
 	color: var(--purple-l)
 }
 
 .tag-pink {
-	background: #FDEEE8;
+	background: #ede8dc;
 	color: var(--peach-d)
 }
 
 .tag-rose {
-	background: #EEF1F5;
+	background: #e8edf4;
 	color: var(--bluegrey-d)
 }
 
@@ -2800,17 +2811,17 @@ select {
 }
 
 .st-won {
-	background: #FEF0E8;
-	color: #A84E0D
+	background: #f5edd8;
+	color: #7e5518
 }
 
 .st-lost {
-	background: #FDE9EB;
-	color: #A0182A
+	background: #f2e8e0;
+	color: #7e3818
 }
 
 .st-open {
-	background: #F3EAF7;
+	background: #f0ead8;
 	color: var(--purple-l)
 }
 
@@ -2849,7 +2860,7 @@ select {
 .modal-overlay {
 	position: fixed;
 	inset: 0;
-	background: rgba(28, 15, 42, .50);
+	background: rgba(30, 22, 8, .50);
 	z-index: 1000;
 	display: flex;
 	align-items: center;
@@ -2987,7 +2998,7 @@ select {
 
 .form-input:focus {
 	border-color: var(--orange);
-	box-shadow: 0 0 0 3px rgba(247, 136, 47, .12);
+	box-shadow: 0 0 0 3px rgba(189, 140, 45, .12);
 	background: var(--surface)
 }
 
@@ -3115,7 +3126,7 @@ select {
 	display: none;
 	position: fixed;
 	inset: 0;
-	background: rgba(28, 15, 42, .55);
+	background: rgba(30, 22, 8, .55);
 	z-index: 1100;
 	animation: fadeIn .2s var(--ease);
 }
@@ -3134,7 +3145,7 @@ select {
 	z-index: 1200;
 	display: flex;
 	flex-direction: column;
-	box-shadow: 4px 0 32px rgba(45, 5, 60, .18);
+	box-shadow: 4px 0 32px rgba(61, 44, 8, .18);
 	animation: drawerIn .28s var(--ease);
 	overflow-y: auto;
 	padding-bottom: env(safe-area-inset-bottom);
@@ -3313,7 +3324,7 @@ select {
 }
 
 .mdf-logout:hover {
-	background: #FDE9EB;
+	background: #f5e8e2;
 	color: var(--rose)
 }
 
@@ -3326,7 +3337,6 @@ select {
 ═════════════════════════════════════════ */
 .bottom-nav {
 	display: none;
-	/* shown only on mobile via media query */
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -3335,7 +3345,7 @@ select {
 	background: var(--surface);
 	border-top: 1px solid var(--border);
 	z-index: 290;
-	box-shadow: 0 -4px 24px rgba(45, 5, 60, .10);
+	box-shadow: 0 -4px 24px rgba(61, 44, 8, .10);
 	padding: 0 .5rem;
 	padding-bottom: env(safe-area-inset-bottom);
 	align-items: center;
@@ -3405,7 +3415,7 @@ select {
 }
 
 /* ══════════════════════════════════════════
-   MOBILE TOPBAR OVERRIDES (applied only at mobile)
+   MOBILE TOPBAR OVERRIDES
 ═════════════════════════════════════════ */
 .mobile-menu-btn {
 	display: none;
@@ -3430,7 +3440,7 @@ select {
 }
 
 /* ══════════════════════════════════════════
-   MOBILE KPI SCROLL ROW (optional helper)
+   MOBILE KPI SCROLL ROW
 ═════════════════════════════════════════ */
 .kpi-scroll-hint {
 	display: none;
@@ -3472,11 +3482,9 @@ select {
 
 /* ══════════════════════════════════════════
    RESPONSIVE — MOBILE 768px
-   Full mobile redesign starts here
 ═════════════════════════════════════════ */
 @media (max-width:768px) {
 
-	/* ── Root overrides ── */
 	:root {
 		--topbar-h: 58px;
 		--r: 12px;
@@ -3484,17 +3492,14 @@ select {
 		font-size: 13px;
 	}
 
-	/* ── Body: account for bottom nav ── */
 	body {
 		padding-bottom: var(--bottom-nav-h)
 	}
 
-	/* ── Hide desktop sidebar entirely ── */
 	.sidebar {
 		display: none !important
 	}
 
-	/* ── Show mobile elements ── */
 	.mobile-menu-btn {
 		display: flex
 	}
@@ -3507,15 +3512,11 @@ select {
 		display: flex
 	}
 
-	/* ────────────────────────────────────────
-     TOPBAR — mobile: logo + actions only
-  ──────────────────────────────────────── */
 	.topbar {
 		padding: 0 .9rem;
 		height: var(--topbar-h);
 	}
 
-	/* Hide desktop collapse btn inside topbar */
 	.topbar .sidebar-collapse-btn {
 		display: none
 	}
@@ -3526,18 +3527,15 @@ select {
 		flex-shrink: 0;
 	}
 
-	/* Search: hide on mobile */
 	.topbar-center {
 		display: none
 	}
 
-	/* Topbar right: keep only essentials */
 	.topbar-right {
 		gap: .18rem;
 		margin-left: auto;
 	}
 
-	/* Hide less-important topbar buttons on mobile */
 	.tb-divider {
 		display: none
 	}
@@ -3546,7 +3544,6 @@ select {
 		display: none
 	}
 
-	/* Compact user chip */
 	.user-chip {
 		padding: .28rem .28rem;
 		gap: 0
@@ -3560,9 +3557,6 @@ select {
 		display: none
 	}
 
-	/* ────────────────────────────────────────
-     MAIN — full width, mobile padding
-  ──────────────────────────────────────── */
 	.main {
 		margin-left: 0;
 		padding: 1rem .9rem;
@@ -3573,9 +3567,6 @@ select {
 		margin-left: 0
 	}
 
-	/* ────────────────────────────────────────
-     PAGE HEADER — stack vertically
-  ──────────────────────────────────────── */
 	.page-header {
 		flex-direction: column;
 		align-items: flex-start;
@@ -3597,7 +3588,6 @@ select {
 		gap: .5rem;
 	}
 
-	/* Avatar stack: tighter */
 	.av-stack {
 		order: -1
 	}
@@ -3608,26 +3598,20 @@ select {
 		height: 26px
 	}
 
-	/* Date button: compact */
 	.date-btn {
 		font-size: .72rem;
 		padding: .4rem .72rem;
 		flex: 0 0 auto;
 	}
 
-	/* Icon buttons */
 	.icon-btn {
 		width: 32px;
 		height: 32px
 	}
 
-	/* ────────────────────────────────────────
-     KPI GRID — 2-column on mobile
-  ──────────────────────────────────────── */
 	.kpi-grid {
 		grid-template-columns: repeat(2, 1fr);
 		gap: .65rem;
-		/* Horizontal scroll if needed */
 		overflow-x: auto;
 		scroll-snap-type: x mandatory;
 		-webkit-overflow-scrolling: touch;
@@ -3639,7 +3623,6 @@ select {
 		gap: .72rem;
 		min-width: 0;
 		scroll-snap-align: start;
-		/* Remove left accent line on mobile, use top instead */
 		border-left: none !important;
 		border-top: 3px solid transparent;
 	}
@@ -3679,15 +3662,11 @@ select {
 		font-size: .64rem
 	}
 
-	/* ────────────────────────────────────────
-     CHARTS ROW — single column
-  ──────────────────────────────────────── */
 	.charts-row {
 		grid-template-columns: 1fr;
 		gap: .9rem;
 	}
 
-	/* Revenue chart: compact */
 	.rev-meta {
 		flex-direction: column;
 		align-items: flex-start;
@@ -3716,7 +3695,6 @@ select {
 		font-size: .68rem
 	}
 
-	/* Donut: smaller */
 	.donut-wrap {
 		width: 136px;
 		height: 136px
@@ -3726,9 +3704,6 @@ select {
 		font-size: 1.22rem
 	}
 
-	/* ────────────────────────────────────────
-     MID ROW — single column
-  ──────────────────────────────────────── */
 	.mid-row {
 		grid-template-columns: 1fr;
 		gap: .9rem
@@ -3738,7 +3713,6 @@ select {
 		grid-column: auto
 	}
 
-	/* Pipeline grid stays 2-col */
 	.pipeline-grid {
 		grid-template-columns: repeat(2, 1fr);
 		gap: .5rem
@@ -3748,9 +3722,6 @@ select {
 		font-size: .82rem
 	}
 
-	/* ────────────────────────────────────────
-     CARDS — tighter padding
-  ──────────────────────────────────────── */
 	.card {
 		padding: 1rem;
 		border-radius: var(--r);
@@ -3760,8 +3731,6 @@ select {
 		transform: none
 	}
 
-	/* Disable hover lift on touch */
-
 	.card-head {
 		margin-bottom: .85rem
 	}
@@ -3770,9 +3739,6 @@ select {
 		font-size: .86rem
 	}
 
-	/* ────────────────────────────────────────
-     TABLE — horizontal scroll
-  ──────────────────────────────────────── */
 	.card--table {
 		padding: 0
 	}
@@ -3811,14 +3777,10 @@ select {
 		padding-right: 1rem
 	}
 
-	/* Probability bar: narrow */
 	.prob-bar-bg {
 		min-width: 38px
 	}
 
-	/* ────────────────────────────────────────
-     DEAL LIST — compact
-  ──────────────────────────────────────── */
 	.deal-logo {
 		width: 32px;
 		height: 32px;
@@ -3834,9 +3796,6 @@ select {
 		font-size: .63rem
 	}
 
-	/* ────────────────────────────────────────
-     MODALS — full-width bottom sheet on mobile
-  ──────────────────────────────────────── */
 	.modal-overlay {
 		align-items: flex-end;
 		padding-bottom: env(safe-area-inset-bottom);
@@ -3867,9 +3826,6 @@ select {
 		grid-template-columns: 1fr
 	}
 
-	/* ────────────────────────────────────────
-     TOASTS — bottom left, full width
-  ──────────────────────────────────────── */
 	.toast-container {
 		left: .75rem;
 		right: .75rem;
@@ -3881,16 +3837,10 @@ select {
 		width: 100%
 	}
 
-	/* ────────────────────────────────────────
-     FAB — hide, bottom nav replaces it
-  ──────────────────────────────────────── */
 	.fab {
 		display: none
 	}
 
-	/* ────────────────────────────────────────
-     FOOTER
-  ──────────────────────────────────────── */
 	.dash-footer {
 		flex-direction: column;
 		gap: .42rem;
@@ -3898,9 +3848,6 @@ select {
 		padding-bottom: calc(.38rem + env(safe-area-inset-bottom));
 	}
 
-	/* ────────────────────────────────────────
-     WON BOX
-  ──────────────────────────────────────── */
 	.won-box {
 		padding: .65rem .8rem
 	}
@@ -3909,23 +3856,14 @@ select {
 		font-size: 1.1rem
 	}
 
-	/* ────────────────────────────────────────
-     OV TOTAL
-  ──────────────────────────────────────── */
 	.ov-num {
 		font-size: 1.4rem
 	}
 
-	/* ────────────────────────────────────────
-     REV BIG NUM
-  ──────────────────────────────────────── */
 	.rev-big-num {
 		font-size: 1.22rem
 	}
 
-	/* ────────────────────────────────────────
-     NOTIFICATION / MSG DROPDOWNS
-  ──────────────────────────────────────── */
 	.notif-dropdown,
 	.msg-dropdown {
 		position: fixed;
@@ -3952,7 +3890,6 @@ select {
 ═════════════════════════════════════════ */
 @media (max-width:480px) {
 
-	/* KPI: full single column for very small screens */
 	.kpi-grid {
 		grid-template-columns: 1fr 1fr
 	}
@@ -3969,12 +3906,10 @@ select {
 		padding: .85rem .75rem
 	}
 
-	/* Smaller brand name on tiny screens */
 	.brand-name {
 		font-size: 1rem
 	}
 
-	/* Bottom nav: tighter */
 	.bn-label {
 		display: none
 	}
@@ -3992,7 +3927,6 @@ select {
 		font-size: 1.08rem
 	}
 
-	/* Charts */
 	.bar-chart-area {
 		height: 100px
 	}
