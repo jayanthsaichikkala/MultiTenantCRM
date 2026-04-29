@@ -8,53 +8,58 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
 import com.springboot1.security.LoginSuccessHandler;
 
 @Configuration
 public class SecurityConfig {
 
-    private final LoginSuccessHandler loginSuccessHandler;
+	private final LoginSuccessHandler loginSuccessHandler;
 
-    public SecurityConfig(LoginSuccessHandler loginSuccessHandler) {
-        this.loginSuccessHandler = loginSuccessHandler;
-    }
+	public SecurityConfig(LoginSuccessHandler loginSuccessHandler) {
+		this.loginSuccessHandler = loginSuccessHandler;
+	}
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests(auth -> auth
-                // ✅ FIXED: added /login.css and /*.css to permit static files
-                .requestMatchers("/login", "/css/**", "/login.css", "/*.css", "/*.js").permitAll()
-                .requestMatchers("/dashboard/super-admin").hasRole("SUPER_ADMIN")
-                .requestMatchers("/dashboard/admin").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers("/dashboard/user").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER")
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .usernameParameter("usernameOrEmail")
-                .passwordParameter("password")
-                .successHandler(loginSuccessHandler)
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutSuccessUrl("/login?logout")
-                .permitAll()
-            );
+	@Bean
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests(auth -> auth
+				// ── Static assets – always public ──────────────────────────
+				.requestMatchers("/login", "/css/**", "/js/**", "/images/**", "/fonts/**", "/webjars/**", "/login.css",
+						"/dashboard-admin.css", "/dashboard-admin.js", "/*.css", "/*.js", "/*.ico", "/*.png", "/*.svg")
+				.permitAll()
 
-        return http.build();
-    }
+				// ── Role-based route access ────────────────────────────────
+				.requestMatchers("/dashboard/super-admin").hasRole("SUPER_ADMIN")
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+				.requestMatchers("/dashboard/admin").hasAnyRole("SUPER_ADMIN", "ADMIN")
 
-    @Bean
-    DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService,
-                                                     PasswordEncoder encoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
-        authProvider.setPasswordEncoder(encoder);
-        return authProvider;
-    }
+				// ← THIS WAS MISSING – all /admin/** routes now secured
+				.requestMatchers("/admin/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+
+				.requestMatchers("/dashboard/user").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER")
+
+				// ── Everything else requires authentication ─────────────────
+				.anyRequest().authenticated())
+				.formLogin(form -> form.loginPage("/login").usernameParameter("usernameOrEmail") // matches
+																									// name="usernameOrEmail"
+																									// in login.html
+						.passwordParameter("password").successHandler(loginSuccessHandler) // redirects by role
+						.failureUrl("/login?error").permitAll())
+				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login?logout")
+						.invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll());
+
+		return http.build(); // ← was [http.build](http://http.build)() — now fixed
+	}
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder encoder) {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
+		authProvider.setPasswordEncoder(encoder);
+		return authProvider;
+	}
 }

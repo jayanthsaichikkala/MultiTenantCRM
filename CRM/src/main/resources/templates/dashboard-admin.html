@@ -31,15 +31,11 @@
 		<nav class="sidebar-nav">
 			<p class="nav-label">Main</p>
 
-			<a href="#" class="nav-item active"><span>Dashboard</span></a>
-			<a href="#" class="nav-item"><span>Customers</span></a>
-			<a href="#" class="nav-item"><span>Leads</span></a>
-			<a href="#" class="nav-item"><span>Deals</span></a>
-			<a href="#" class="nav-item"><span>Reports</span></a>
-
+			<a th:href="@{/admin/dashboard}" class="nav-item active"><span>Dashboard</span></a>
+			
 			<p class="nav-label">System</p>
-			<a href="#" class="nav-item"><span>Products</span></a>
-			<a href="#" class="nav-item"><span>Settings</span></a>
+<!--			<a th:href="@{/admin/employees(role='MANAGER')}" class="nav-item"><span>Managers</span></a>-->
+<!--			<a th:href="@{/admin/employees(role='SALES_EXECUTIVE')}" class="nav-item"><span>Sales Executives</span></a>-->
 		</nav>
 
 		<!-- Logout -->
@@ -52,19 +48,22 @@
 
 	</aside>
 
+	<!-- Sidebar overlay (mobile) -->
+	<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 	<!-- ================= MAIN ================= -->
 	<div class="main-wrapper">
 
 		<!-- Topbar -->
 		<header class="topbar">
-			<button class="hamburger" id="hamburger"></button>
+			<button class="hamburger" id="hamburger" aria-label="Toggle menu"></button>
 
 			<div class="search-box">
 				<input type="text" placeholder="Search..." />
 			</div>
 
 			<div class="topbar-right">
-				<button class="notif-btn"></button>
+				<button class="notif-btn" aria-label="Notifications"></button>
 
 				<div class="avatar-wrap">
 					<div class="avatar">A</div>
@@ -85,47 +84,142 @@
 					<h1>Dashboard</h1>
 					<p>CRM overview</p>
 				</div>
-				<button class="btn-primary">Add New Lead</button>
+				<a th:href="@{/admin/leads}" class="btn-primary">View Leads</a>
 			</div>
 
-			<!-- KPI Cards -->
+			<!-- ── Toast Notifications ─────────────────────────────────── -->
+			<div th:if="${success}" class="toast toast-success" th:text="${success}"></div>
+			<div th:if="${error}" class="toast toast-error" th:text="${error}"></div>
+
+			<!-- ── KPI Cards ──────────────────────────────────────────────
+			     Model attributes supplied by AdminController#dashboard():
+			       totalEmployees, totalManagers, totalSalesExecs,
+			       activeEmployees, pendingLeads, approvedLeads,
+			       totalLeads, approvedValue
+			-->
 			<section class="kpi-grid">
+
 				<div class="kpi-card">
-					<p class="kpi-value">2,847</p>
-					<p>Total Customers</p>
+					<p class="kpi-value" th:text="${totalEmployees}">0</p>
+					<p>Total Employees</p>
+					<div class="kpi-bar">
+						<div th:style="|width:${totalEmployees > 0 ? 100 : 0}%|"></div>
+					</div>
 				</div>
+
 				<div class="kpi-card">
-					<p class="kpi-value">143</p>
-					<p>Active Leads</p>
+					<p class="kpi-value" th:text="${totalManagers}">0</p>
+					<p>Managers</p>
+					<div class="kpi-bar">
+						<div th:style="|width:${totalEmployees > 0 ? (totalManagers * 100 / totalEmployees) : 0}%|">
+						</div>
+					</div>
 				</div>
+
 				<div class="kpi-card">
-					<p class="kpi-value">₹48.6L</p>
-					<p>Revenue</p>
+					<p class="kpi-value" th:text="${totalSalesExecs}">0</p>
+					<p>Sales Executives</p>
+					<div class="kpi-bar">
+						<div th:style="|width:${totalEmployees > 0 ? (totalSalesExecs * 100 / totalEmployees) : 0}%|">
+						</div>
+					</div>
 				</div>
+
 				<div class="kpi-card">
-					<p class="kpi-value">38</p>
-					<p>Deals Closed</p>
+					<p class="kpi-value" th:text="${activeEmployees}">0</p>
+					<p>Active Employees</p>
+					<div class="kpi-bar">
+						<div th:style="|width:${totalEmployees > 0 ? (activeEmployees * 100 / totalEmployees) : 0}%|">
+						</div>
+					</div>
 				</div>
+
 			</section>
 
-			<!-- Table Section -->
+			<!-- ── Lead Pipeline Cards ─────────────────────────────────── -->
+			<section class="kpi-grid">
+
+				<div class="kpi-card">
+					<p class="kpi-value" th:text="${totalLeads}">0</p>
+					<p>Total Leads</p>
+					<div class="stage-bar">
+						<div th:style="|width:100%|"></div>
+					</div>
+				</div>
+
+				<div class="kpi-card">
+					<p class="kpi-value" th:text="${pendingLeads}">0</p>
+					<p>Pending Leads</p>
+					<div class="stage-bar">
+						<div th:style="|width:${totalLeads > 0 ? (pendingLeads * 100 / totalLeads) : 0}%|"></div>
+					</div>
+				</div>
+
+				<div class="kpi-card">
+					<p class="kpi-value" th:text="${approvedLeads}">0</p>
+					<p>Approved Leads</p>
+					<div class="stage-bar">
+						<div th:style="|width:${totalLeads > 0 ? (approvedLeads * 100 / totalLeads) : 0}%|"></div>
+					</div>
+				</div>
+
+				<div class="kpi-card">
+					<!-- approvedValue is BigDecimal from LeadService#sumApprovedValue() -->
+					<p class="kpi-value" th:text="${#numbers.formatDecimal(approvedValue, 1, 'COMMA', 2, 'POINT')}">0.00
+					</p>
+					<p>Approved Deal Value (₹)</p>
+				</div>
+
+			</section>
+
+			<!-- ── Recent / Pending Leads Table ───────────────────────────
+			     Model attribute: recentLeads  (List<Lead> – pending leads)
+			     Each Lead exposes: id, customerName, email, company,
+			                        source, dealValue, status, createdBy,
+			                        assignedTo, createdAt
+			-->
 			<section class="table-card">
-				<h2>Recent Leads</h2>
+				<div class="table-header">
+					<h2>Pending Leads</h2>
+					<a th:href="@{/admin/leads(status='PENDING')}" class="btn-primary">View All</a>
+				</div>
+
 				<table>
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>Name</th>
+							<th>Customer</th>
 							<th>Email</th>
+							<th>Company</th>
+							<th>Deal Value (₹)</th>
+							<th>Source</th>
+							<th>Created By</th>
+							<th>Date</th>
 							<th>Status</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>001</td>
-							<td>Ravi Kumar</td>
-							<td>ravi@email.com</td>
-							<td>New</td>
+						<!-- th:each iterates recentLeads; iterStat gives loop index -->
+						<tr th:each="lead, iterStat : ${recentLeads}">
+							<td th:text="${iterStat.count}">1</td>
+							<td th:text="${lead.customerName}">—</td>
+							<td th:text="${lead.email}">—</td>
+							<td th:text="${lead.company ?: '—'}">—</td>
+							<td th:text="${#numbers.formatDecimal(lead.dealValue, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+							<td th:text="${lead.source?.name()}">—</td>
+							<td th:text="${lead.createdBy?.name ?: '—'}">—</td>
+							<td th:text="${#temporals.format(lead.createdAt, 'dd MMM yyyy')}">—</td>
+							<td>
+								<span class="badge badge-pending"
+									th:text="${lead.status.getDisplayName()}">Pending</span>
+							</td>
+						</tr>
+
+						<!-- Empty-state row -->
+						<tr th:if="${#lists.isEmpty(recentLeads)}">
+							<td colspan="9" style="text-align:center; padding:2rem; color:#6b7280;">
+								No pending leads at the moment.
+							</td>
 						</tr>
 					</tbody>
 				</table>
