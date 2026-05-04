@@ -95,7 +95,7 @@ body {
 	letter-spacing: 0.5px;
 }
 
-/* Diamond decorations */
+/* ── Diamond decorations ───────────────────────────── */
 .diamonds {
 	display: flex;
 	flex-direction: column;
@@ -117,6 +117,54 @@ body {
 	border-color: rgba(255, 255, 255, 0.8);
 }
 
+/* ── Diamond Animations ────────────────────────────── */
+
+/*
+  Keyframe: slides from -18px (top) down to +18px (bottom) and back.
+  The base rotate(45deg) is preserved so the diamond shape stays intact.
+*/
+@keyframes diamondFloat {
+	0% {
+		transform: rotate(45deg) translateY(-18px);
+		opacity: 0.6;
+	}
+
+	50% {
+		transform: rotate(45deg) translateY(18px);
+		opacity: 1;
+	}
+
+	100% {
+		transform: rotate(45deg) translateY(-18px);
+		opacity: 0.6;
+	}
+}
+
+/*
+  Each diamond gets the same animation but with a staggered delay so they
+  ripple top → middle → bottom, then reverse naturally on the way back up.
+  - duration  : 3s  — comfortable, not too fast or slow
+  - timing    : ease-in-out — smooth acceleration / deceleration
+  - iteration : infinite — loops forever
+*/
+.diamonds .diamond:nth-child(1) {
+	animation: diamondFloat 3s ease-in-out infinite;
+	animation-delay: 0s;
+}
+
+.diamonds .diamond:nth-child(2) {
+	animation: diamondFloat 3s ease-in-out infinite;
+	animation-delay: 0.4s;
+	/* starts slightly after the first  */
+}
+
+.diamonds .diamond:nth-child(3) {
+	animation: diamondFloat 3s ease-in-out infinite;
+	animation-delay: 0.8s;
+	/* starts slightly after the second */
+}
+
+/* ── Panel bottom ──────────────────────────────────── */
 .panel-bottom h2 {
 	font-size: 1.4rem;
 	margin-bottom: 10px;
