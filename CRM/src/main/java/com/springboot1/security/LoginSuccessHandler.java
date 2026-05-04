@@ -20,6 +20,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
                 .anyMatch(auth -> auth.getAuthority().equals("ROLE_SUPER_ADMIN"));
         boolean isAdmin = authentication.getAuthorities().stream()
                 .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+        boolean isSalesExecutive = authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_SALES_EXECUTIVE"));
 
         if (isSuperAdmin) {
             response.sendRedirect("/dashboard/super-admin");
@@ -27,6 +29,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         }
         if (isAdmin) {
             response.sendRedirect("/dashboard/admin");
+            return;
+        }
+        if (isSalesExecutive) {
+            response.sendRedirect("/dashboard/sales-executive");
             return;
         }
         response.sendRedirect("/dashboard/user");

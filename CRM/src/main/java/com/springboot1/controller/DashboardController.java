@@ -20,4 +20,9 @@ public class DashboardController {
     public String userDashboard() {
         return "dashboard-user";
     }
+
+    @GetMapping("/dashboard/sales-executive")
+    public String salesExecutiveDashboard() {
+        return "dashboard-sales-executive";
+    }
 }

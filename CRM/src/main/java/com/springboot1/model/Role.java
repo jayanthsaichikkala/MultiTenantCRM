@@ -3,5 +3,6 @@ package com.springboot1.model;
 public enum Role {
     SUPER_ADMIN,
     ADMIN,
-    USER
+    USER,
+    SALES_EXECUTIVE
 }
